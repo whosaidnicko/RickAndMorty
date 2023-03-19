@@ -9,7 +9,7 @@ import Foundation
 
 
 struct HeroesModel {
-    let name: String 
-    let img: String
+    public let name: String
+    public let img: String
 
 }

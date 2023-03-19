@@ -8,15 +8,15 @@
 import Foundation
 
 struct HeroesData: Decodable {
-    let results : [Result]
+    public let results : [Result]
   
     
 }
 
 struct Result: Decodable {
 
-   let  name : String
-    let image: String
+   public let  name : String
+   public  let image: String
     
     
 }

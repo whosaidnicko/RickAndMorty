@@ -8,7 +8,7 @@
 import UIKit
 
 
-protocol HeroesManagerDelegate {
+protocol HeroesManagerDelegateProtocol {
     func fetchHeroData(_: HeroesManager, hero: HeroesModel) 
     func didFailWithError(error: Error)
     
@@ -16,7 +16,7 @@ protocol HeroesManagerDelegate {
 
 struct HeroesManager {
     
-    var delegate: HeroesManagerDelegate?
+    public var delegate: HeroesManagerDelegateProtocol?
     func getPost(url: String, completion: @escaping(Swift.Result<HeroesData, Error> ) -> Void) {
          
          guard let url = URL(string: url) else { return }
@@ -32,7 +32,7 @@ struct HeroesManager {
                      DispatchQueue.main.async {
                          let heroesModel = HeroesModel(name: json.results[0].name,
                                                        img: json.results[0].image)
-                         print("from model \(json.results[0].name)")
+                         print("from heroesManager \(json.results[0].name)")
                          
                          self.delegate?.fetchHeroData(self, hero: heroesModel)
                      }

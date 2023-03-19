@@ -9,22 +9,22 @@ import UIKit
 
 
 
-class ViewController: UIViewController{
+final class ViewController: UIViewController{
     
     
     
     @IBOutlet weak var tableView: UITableView!
     
-    var     result: [Result?] = [] {
+   private var     result: [Result?] = [] {
         didSet {
             DispatchQueue.main.async {
                 self.tableView.reloadData()
             }
         }
     }
-    var heroesModel: HeroesModel?
-    let urls = URLs()
-    var heroesManager = HeroesManager()
+   private var heroesModel: HeroesModel?
+    private let urls = URLs()
+     private var heroesManager = HeroesManager()
     
     
     
@@ -82,7 +82,7 @@ extension UIImageView {
 
 //MARK: - protocol HeroesManagerDelegate
 
-extension ViewController: HeroesManagerDelegate {
+extension ViewController: HeroesManagerDelegateProtocol {
     func fetchHeroData(_: HeroesManager, hero: HeroesModel) {
         print("this comes from protocol = \(hero.name)")
     }
