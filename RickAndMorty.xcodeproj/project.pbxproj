@@ -7,15 +7,24 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F45DFAE829C2585D005BE7C6 /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F45DFAE629C2585D005BE7C6 /* TableViewCell.swift */; };
+		F45DFAE929C2585D005BE7C6 /* TableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F45DFAE729C2585D005BE7C6 /* TableViewCell.xib */; };
+		F4AB1FF529C2433800ADF422 /* HeroesModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4AB1FF429C2433800ADF422 /* HeroesModel.swift */; };
 		F4DF55A829BA1F36009B8E9C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4DF55A729BA1F36009B8E9C /* AppDelegate.swift */; };
 		F4DF55AA29BA1F36009B8E9C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4DF55A929BA1F36009B8E9C /* SceneDelegate.swift */; };
 		F4DF55AC29BA1F36009B8E9C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4DF55AB29BA1F36009B8E9C /* ViewController.swift */; };
 		F4DF55AF29BA1F36009B8E9C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F4DF55AD29BA1F36009B8E9C /* Main.storyboard */; };
 		F4DF55B129BA1F37009B8E9C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F4DF55B029BA1F37009B8E9C /* Assets.xcassets */; };
 		F4DF55B429BA1F37009B8E9C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F4DF55B229BA1F37009B8E9C /* LaunchScreen.storyboard */; };
+		F4DF55BD29BA1F66009B8E9C /* HeroesData.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4DF55BC29BA1F66009B8E9C /* HeroesData.swift */; };
+		F4DF55C129BA1FB8009B8E9C /* URLs.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4DF55C029BA1FB8009B8E9C /* URLs.swift */; };
+		F4EEDDA429BA212800EA23F5 /* HeroesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4EEDDA329BA212800EA23F5 /* HeroesManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		F45DFAE629C2585D005BE7C6 /* TableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewCell.swift; sourceTree = "<group>"; };
+		F45DFAE729C2585D005BE7C6 /* TableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TableViewCell.xib; sourceTree = "<group>"; };
+		F4AB1FF429C2433800ADF422 /* HeroesModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeroesModel.swift; sourceTree = "<group>"; };
 		F4DF55A429BA1F36009B8E9C /* RickAndMorty.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RickAndMorty.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F4DF55A729BA1F36009B8E9C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F4DF55A929BA1F36009B8E9C /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -24,6 +33,9 @@
 		F4DF55B029BA1F37009B8E9C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F4DF55B329BA1F37009B8E9C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		F4DF55B529BA1F37009B8E9C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F4DF55BC29BA1F66009B8E9C /* HeroesData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeroesData.swift; sourceTree = "<group>"; };
+		F4DF55C029BA1FB8009B8E9C /* URLs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLs.swift; sourceTree = "<group>"; };
+		F4EEDDA329BA212800EA23F5 /* HeroesManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeroesManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -37,6 +49,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		F4A2ECED29C7207F00E54D1F /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				F4DF55AB29BA1F36009B8E9C /* ViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		F4A2ECEE29C720B500E54D1F /* View */ = {
+			isa = PBXGroup;
+			children = (
+				F4DF55B229BA1F37009B8E9C /* LaunchScreen.storyboard */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		F4DF559B29BA1F36009B8E9C = {
 			isa = PBXGroup;
 			children = (
@@ -56,15 +84,37 @@
 		F4DF55A629BA1F36009B8E9C /* RickAndMorty */ = {
 			isa = PBXGroup;
 			children = (
+				F4DF55BB29BA1F3F009B8E9C /* Model */,
+				F4A2ECEE29C720B500E54D1F /* View */,
+				F4A2ECED29C7207F00E54D1F /* Controller */,
+				F4DF55BF29BA1FA8009B8E9C /* Urls */,
 				F4DF55A729BA1F36009B8E9C /* AppDelegate.swift */,
 				F4DF55A929BA1F36009B8E9C /* SceneDelegate.swift */,
-				F4DF55AB29BA1F36009B8E9C /* ViewController.swift */,
+				F45DFAE629C2585D005BE7C6 /* TableViewCell.swift */,
+				F45DFAE729C2585D005BE7C6 /* TableViewCell.xib */,
 				F4DF55AD29BA1F36009B8E9C /* Main.storyboard */,
 				F4DF55B029BA1F37009B8E9C /* Assets.xcassets */,
-				F4DF55B229BA1F37009B8E9C /* LaunchScreen.storyboard */,
 				F4DF55B529BA1F37009B8E9C /* Info.plist */,
 			);
 			path = RickAndMorty;
+			sourceTree = "<group>";
+		};
+		F4DF55BB29BA1F3F009B8E9C /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				F4EEDDA329BA212800EA23F5 /* HeroesManager.swift */,
+				F4DF55BC29BA1F66009B8E9C /* HeroesData.swift */,
+				F4AB1FF429C2433800ADF422 /* HeroesModel.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		F4DF55BF29BA1FA8009B8E9C /* Urls */ = {
+			isa = PBXGroup;
+			children = (
+				F4DF55C029BA1FB8009B8E9C /* URLs.swift */,
+			);
+			path = Urls;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -126,6 +176,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F4DF55B429BA1F37009B8E9C /* LaunchScreen.storyboard in Resources */,
+				F45DFAE929C2585D005BE7C6 /* TableViewCell.xib in Resources */,
 				F4DF55B129BA1F37009B8E9C /* Assets.xcassets in Resources */,
 				F4DF55AF29BA1F36009B8E9C /* Main.storyboard in Resources */,
 			);
@@ -138,8 +189,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F4EEDDA429BA212800EA23F5 /* HeroesManager.swift in Sources */,
+				F45DFAE829C2585D005BE7C6 /* TableViewCell.swift in Sources */,
+				F4DF55C129BA1FB8009B8E9C /* URLs.swift in Sources */,
 				F4DF55AC29BA1F36009B8E9C /* ViewController.swift in Sources */,
 				F4DF55A829BA1F36009B8E9C /* AppDelegate.swift in Sources */,
+				F4AB1FF529C2433800ADF422 /* HeroesModel.swift in Sources */,
+				F4DF55BD29BA1F66009B8E9C /* HeroesData.swift in Sources */,
 				F4DF55AA29BA1F36009B8E9C /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
