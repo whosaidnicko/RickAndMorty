@@ -9,7 +9,7 @@ import UIKit
 
 
 
-class ViewController: UIViewController, HeroesManagerDelegate{
+class ViewController: UIViewController{
     
     
     
@@ -52,19 +52,12 @@ class ViewController: UIViewController, HeroesManagerDelegate{
         tableView.reloadData()
     }
     
-    func fetchHeroData(_: HeroesManager, hero: HeroesModel) {
-        print(hero.name)
-        
-    }
-    
-    func didFailWithError(error: Error) {
- print(error)
-    }
+  
     
   
 }
 
-
+//MARK: -  download Image
 extension UIImageView {
     
     func downloaded(from url: URL, contentMode mode: ContentMode = .scaleAspectFit) {
@@ -86,6 +79,22 @@ extension UIImageView {
         downloaded(from: url, contentMode: mode)
     }
 }
+
+//MARK: - protocol HeroesManagerDelegate
+
+extension ViewController: HeroesManagerDelegate {
+    func fetchHeroData(_: HeroesManager, hero: HeroesModel) {
+        print("this comes from protocol = \(hero.name)")
+    }
+    
+    func didFailWithError(error: Error) {
+        print(error.localizedDescription)
+    }
+    
+
+}
+
+//MARK: - UITableView data source
 
 extension ViewController: UITableViewDataSource {
     
