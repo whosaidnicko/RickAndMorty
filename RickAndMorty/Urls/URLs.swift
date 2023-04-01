@@ -8,5 +8,6 @@
 import Foundation
 
 struct URLs {
-     static let url = "https://rickandmortyapi.com/api/character"
+     static var urlHeroes = "https://rickandmortyapi.com/api/character?page="
+    static let urlEpisode = "https://rickandmortyapi.com/api/episode"
 }

@@ -12,19 +12,30 @@ import UIKit
 final class ViewController: UIViewController{
     
     
+    private  var headerTitle: UILabel{
+     let headerTitle = UILabel()
+        headerTitle.text = "Rick and Morty"
+        headerTitle.font = UIFont(name: "HelveticaNeue-CondensedBlack", size: 35)
+        headerTitle.layer.frame = CGRect(x: 25, y: 95, width: 450, height: 37)
+        view.addSubview(headerTitle)
+        return headerTitle
+        
+    }
     
     @IBOutlet weak var tableView: UITableView!
     
-   private var     result: [Result?] = [] {
+   private var     result: [Result] = [] {
         didSet {
             DispatchQueue.main.async {
                 self.tableView.reloadData()
             }
         }
     }
-   private var heroesModel: HeroesModel?
+    private var episodeModel: [EpisodeModel] = []
+    private var heroesModel: [HeroesModel] = []
     private let urls = URLs()
-     private var heroesManager = HeroesManager()
+     private var networkManager = NetworkManager()
+    
     
     
     
@@ -33,23 +44,63 @@ final class ViewController: UIViewController{
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        UIFont.familyNames.forEach({ familyName in
+                   let fontNames = UIFont.fontNames(forFamilyName: familyName)
+                   print(familyName, fontNames)
+               })
         
-        heroesManager.delegate = self
+  
+        tableView.rowHeight = 120
+        tableView.estimatedRowHeight = 120
+        tableView.backgroundColor = .white
         tableView.dataSource = self
+        tableView.delegate = self
+       
         tableView.register(UINib(nibName: "TableViewCell", bundle: nil), forCellReuseIdentifier: "CellHero")
-        heroesManager.getPost(url: URLs.url, completion: {result in
+        tableView.reloadData()
+    
+        
+    
+        networkManager.getPost(url: URLs.urlHeroes, completion: {[weak self] result in
             switch result {
             case .failure(let error):
                 print(error)
             case .success(let succes):
-                print(succes)
+             print("Data is succsfull fetched !")
+                self?.heroesModel = succes
+                DispatchQueue.main.async {
+                [weak self] in
+                    self?.tableView.reloadData()
+                }
+                
+                
+                
+               
+                
+            }
+        })
+        
+        networkManager.getEpisode(url: URLs.urlEpisode, completion: {[weak self] result in
+            switch result {
+            case .failure(let error):
+                print(error)
+            case .success(let succes):
+             print("Data is succsfull fetched !")
+                self?.episodeModel = succes
+                DispatchQueue.main.async {
+                [weak self] in
+                    self?.tableView.reloadData()
+                }
+                
+                
+                
                
                 
             }
         })
         
         
-        tableView.reloadData()
+       
     }
     
   
@@ -78,41 +129,61 @@ extension UIImageView {
         guard let url = URL(string: link) else { return }
         downloaded(from: url, contentMode: mode)
     }
+    func makeRounded() {
+          let radius = self.bounds.height / 2.0
+          self.layer.cornerRadius = radius
+          self.layer.masksToBounds = true
+          self.clipsToBounds = true
+         
+          self.contentMode = .scaleAspectFill
+      }
 }
 
-//MARK: - protocol HeroesManagerDelegate
 
-extension ViewController: HeroesManagerDelegateProtocol {
-    func fetchHeroData(_: HeroesManager, hero: HeroesModel) {
-        print("this comes from protocol = \(hero.name)")
-    }
-    
-    func didFailWithError(error: Error) {
-        print(error.localizedDescription)
-    }
-    
-
-}
 
 //MARK: - UITableView data source
 
 extension ViewController: UITableViewDataSource {
-    
+  
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 2
-    }
+        return heroesModel.count    }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "CellHero", for: indexPath) as! TableViewCell
-        //MARK: - Mne nujno shtobi tyt proisholido change name , no tut nichego ne proishodit potomushto heroesModel?.name = nil , pochemu iz jsona nichego ne peraiotsa , i kak zdelati shtobi peredavalosi :D 
-        cell.nameHero.text = heroesModel?.name
-        
+     
+        cell.backgroundColor = .red
+        cell.backMainView.layer.masksToBounds = false
+        cell.nameHero.text =  heroesModel[indexPath.row].name
+        cell.backgroundColor = .black
+        cell.pictureHero.downloaded(from: heroesModel[indexPath.row].img  , contentMode: .scaleAspectFill)
+        cell.labelLocation.text = heroesModel[indexPath.row].nameLocation
+        cell.dinamicLabelEpisode.text = episodeModel[indexPath.row].name
+    
+       
         
    
         return cell
   
     }
 }
+
+extension ViewController: UITableViewDelegate {
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return  55
+    }
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let abstractView = UIView()
+   
+        
+        return abstractView
+    }
+}
+
+
+
+
 
 
 

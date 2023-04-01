@@ -11,5 +11,6 @@ import Foundation
 struct HeroesModel {
     public let name: String
     public let img: String
+    public let nameLocation: String
 
 }
