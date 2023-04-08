@@ -10,8 +10,10 @@ import UIKit
 
 
 final class ViewController: UIViewController{
+    var path =  IndexPath()
     
     
+
     private  var headerTitle: UILabel{
      let headerTitle = UILabel()
         headerTitle.text = "Rick and Morty"
@@ -44,12 +46,12 @@ final class ViewController: UIViewController{
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        UIFont.familyNames.forEach({ familyName in
-                   let fontNames = UIFont.fontNames(forFamilyName: familyName)
-                   print(familyName, fontNames)
-               })
+        //UIFont.familyNames.forEach({ familyName in
+                 //  let fontNames = UIFont.fontNames(forFamilyName: familyName)
+                   //print(familyName, fontNames)
+             //  })
         
-  
+  headerTitle
         tableView.rowHeight = 120
         tableView.estimatedRowHeight = 120
         tableView.backgroundColor = .white
@@ -79,6 +81,8 @@ final class ViewController: UIViewController{
                 
             }
         })
+        
+     
         
         networkManager.getEpisode(url: URLs.urlEpisode, completion: {[weak self] result in
             switch result {
@@ -144,14 +148,17 @@ extension UIImageView {
 //MARK: - UITableView data source
 
 extension ViewController: UITableViewDataSource {
+    
   
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+  
+        
         return heroesModel.count    }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "CellHero", for: indexPath) as! TableViewCell
-     
+        
         cell.backgroundColor = .red
         cell.backMainView.layer.masksToBounds = false
         cell.nameHero.text =  heroesModel[indexPath.row].name
@@ -159,10 +166,7 @@ extension ViewController: UITableViewDataSource {
         cell.pictureHero.downloaded(from: heroesModel[indexPath.row].img  , contentMode: .scaleAspectFill)
         cell.labelLocation.text = heroesModel[indexPath.row].nameLocation
         cell.dinamicLabelEpisode.text = episodeModel[indexPath.row].name
-    
-       
-        
-   
+
         return cell
   
     }
@@ -179,7 +183,37 @@ extension ViewController: UITableViewDelegate {
         
         return abstractView
     }
-}
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        performSegue(withIdentifier: "goToDetailedCharacters", sender: self)
+    }
+  
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let path = tableView.indexPathForSelectedRow
+        let index = path?.row
+        
+        let secondVc = segue.destination as! SecondViewController
+        secondVc.topTitle.text =  heroesModel[index!].name
+        secondVc.imageCharacter.downloaded(from: heroesModel[index!].img, contentMode: .scaleToFill)
+        secondVc.location.text = heroesModel[index!].nameLocation
+        secondVc.episodeText.text = episodeModel[index!].name
+        secondVc.statusLabel.text = heroesModel[index!].status
+    
+        secondVc.alsoLabel.text = ("Also from \"\(episodeModel[index!].name)\"")
+       
+    
+  
+                
+            }
+        }
+      
+        
+        
+    
+  
+  
+    
+
 
 
 

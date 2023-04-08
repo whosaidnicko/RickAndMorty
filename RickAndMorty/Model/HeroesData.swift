@@ -14,10 +14,10 @@ struct HeroesData: Decodable {
 }
 
 struct Result: Decodable {
-     
+public let status: String
 public let  name : String
-public  let image: String
-    public let location : Locations
+public let image: String
+public let location : Locations
     
     
 }

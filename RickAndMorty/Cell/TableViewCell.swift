@@ -45,12 +45,12 @@ class TableViewCell: UITableViewCell{
     
     func setLabel() {
         
-        nameHero.layer.frame = CGRect(x: 120, y: 28, width: 300, height: 23)
-        nameHero.textColor = .systemOrange
+        nameHero.layer.frame = CGRect(x: 120, y: 28, width: 300, height: 30)
+        nameHero.textColor = #colorLiteral(red: 1, green: 0.6838926673, blue: 0, alpha: 1)
+
         
         
-        
-        nameHero.font = UIFont(name: "Verdana-BoldItalic", size: 15)
+        nameHero.font = UIFont(name: "HelveticaNeue-CondensedBlack", size: 20)
         
         addSubview(nameHero)
     }
@@ -65,7 +65,7 @@ class TableViewCell: UITableViewCell{
     
     
     func setShadow() {
-        shadow.layer.frame = CGRect(x: 32, y: 26, width: 310 , height: 91)
+        shadow.layer.frame = CGRect(x: 32, y: 26, width: 320 , height: 91)
         shadow.layer.masksToBounds = false
         shadow.layer.shadowOffset = CGSizeMake(0, 0)
         shadow.layer.shadowColor = UIColor.black.cgColor
@@ -75,7 +75,7 @@ class TableViewCell: UITableViewCell{
         addSubview(shadow)
     }
     func backMainViewSet() {
-        backMainView.layer.frame = CGRect(x: 25, y: 23, width: 320, height: 94)
+        backMainView.layer.frame = CGRect(x: 25, y: 23, width: 330, height: 94)
         backMainView.backgroundColor = .white
         backMainView.layer.cornerRadius = 10
         backMainView.layer.masksToBounds = true
@@ -83,7 +83,7 @@ class TableViewCell: UITableViewCell{
     }
     
     func setLabelLocation(){
-        labelLocation.layer.frame = CGRect(x: 120, y: 45, width: 250, height: 30)
+        labelLocation.layer.frame = CGRect(x: 120, y: 53, width: 250, height: 30)
         labelLocation.textColor = .systemGray
         labelLocation.font = .boldSystemFont(ofSize: 14)
         addSubview(labelLocation)
@@ -92,14 +92,16 @@ class TableViewCell: UITableViewCell{
     
     func setStaticLabelEp() {
         staticLabelEpisode.text = "Episode:"
-        staticLabelEpisode.layer.frame = CGRect(x: 120, y: 39, width: 80, height: 80)
+        staticLabelEpisode.layer.frame = CGRect(x: 120, y: 48, width: 80, height: 80)
         staticLabelEpisode.textColor = .systemGray
         staticLabelEpisode.font = .boldSystemFont(ofSize: 10)
         addSubview(staticLabelEpisode)
         
     }
     func setDinamicLabelEp() {
-        dinamicLabelEpisode.layer.frame = CGRect(x: 120, y: 50, width: 170, height: 80)
+        dinamicLabelEpisode.layer.frame = CGRect(x: 120, y: 59, width: 170, height: 80)
+        
+        
         dinamicLabelEpisode.textColor = .systemGray
         dinamicLabelEpisode.font = .boldSystemFont(ofSize: 10)
         addSubview(dinamicLabelEpisode)
