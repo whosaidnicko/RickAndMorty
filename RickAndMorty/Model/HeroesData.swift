@@ -14,6 +14,7 @@ struct HeroesData: Decodable {
 }
 
 struct Result: Decodable {
+    public let id: Int
 public let status: String
 public let  name : String
 public let image: String

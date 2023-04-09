@@ -9,4 +9,5 @@ import Foundation
 
 struct EpisodeModel: Decodable {
     public let name: String
+    public let characters: [String]
 }

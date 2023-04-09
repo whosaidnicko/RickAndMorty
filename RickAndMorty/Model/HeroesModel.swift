@@ -8,10 +8,11 @@
 import Foundation
 
 
-struct HeroesModel {
+struct HeroesModel:Decodable {
     public let name: String
     public let img: String
     public let nameLocation: String
     public let status: String
+    public let id: Int
 
 }

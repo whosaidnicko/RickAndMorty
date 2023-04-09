@@ -7,8 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F413AA8929E33368001E0B2F /* DataCharactersLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = F413AA8829E33368001E0B2F /* DataCharactersLocation.swift */; };
 		F4523CBA29DA130F0036A40D /* SecondCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4523CB829DA130F0036A40D /* SecondCell.swift */; };
-		F4523CBB29DA130F0036A40D /* SecondCellHero.xib in Resources */ = {isa = PBXBuildFile; fileRef = F4523CB929DA130F0036A40D /* SecondCellHero.xib */; };
+		F4523CBB29DA130F0036A40D /* SecondCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F4523CB929DA130F0036A40D /* SecondCell.xib */; };
 		F4523CBD29DA13FC0036A40D /* SecondViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4523CBC29DA13FC0036A40D /* SecondViewController.swift */; };
 		F45DFAE829C2585D005BE7C6 /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F45DFAE629C2585D005BE7C6 /* TableViewCell.swift */; };
 		F45DFAE929C2585D005BE7C6 /* TableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F45DFAE729C2585D005BE7C6 /* TableViewCell.xib */; };
@@ -27,8 +28,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		F413AA8829E33368001E0B2F /* DataCharactersLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataCharactersLocation.swift; sourceTree = "<group>"; };
 		F4523CB829DA130F0036A40D /* SecondCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondCell.swift; sourceTree = "<group>"; };
-		F4523CB929DA130F0036A40D /* SecondCellHero.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SecondCellHero.xib; sourceTree = "<group>"; };
+		F4523CB929DA130F0036A40D /* SecondCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SecondCell.xib; sourceTree = "<group>"; };
 		F4523CBC29DA13FC0036A40D /* SecondViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondViewController.swift; sourceTree = "<group>"; };
 		F45DFAE629C2585D005BE7C6 /* TableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewCell.swift; sourceTree = "<group>"; };
 		F45DFAE729C2585D005BE7C6 /* TableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TableViewCell.xib; sourceTree = "<group>"; };
@@ -65,7 +67,7 @@
 				F45DFAE729C2585D005BE7C6 /* TableViewCell.xib */,
 				F45DFAE629C2585D005BE7C6 /* TableViewCell.swift */,
 				F4523CB829DA130F0036A40D /* SecondCell.swift */,
-				F4523CB929DA130F0036A40D /* SecondCellHero.xib */,
+				F4523CB929DA130F0036A40D /* SecondCell.xib */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -128,6 +130,7 @@
 				F4AB1FF429C2433800ADF422 /* HeroesModel.swift */,
 				F48EDA1A29D8C3C300F0A7B1 /* EpisodeData.swift */,
 				F48EDA1629D8C3AA00F0A7B1 /* EpisodeModel.swift */,
+				F413AA8829E33368001E0B2F /* DataCharactersLocation.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -202,7 +205,7 @@
 				F45DFAE929C2585D005BE7C6 /* TableViewCell.xib in Resources */,
 				F4DF55B129BA1F37009B8E9C /* Assets.xcassets in Resources */,
 				F4DF55AF29BA1F36009B8E9C /* Main.storyboard in Resources */,
-				F4523CBB29DA130F0036A40D /* SecondCellHero.xib in Resources */,
+				F4523CBB29DA130F0036A40D /* SecondCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -225,6 +228,7 @@
 				F4AB1FF529C2433800ADF422 /* HeroesModel.swift in Sources */,
 				F4DF55BD29BA1F66009B8E9C /* HeroesData.swift in Sources */,
 				F4DF55AA29BA1F36009B8E9C /* SceneDelegate.swift in Sources */,
+				F413AA8929E33368001E0B2F /* DataCharactersLocation.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -96,10 +96,6 @@ final class ViewController: UIViewController{
                     self?.tableView.reloadData()
                 }
                 
-                
-                
-               
-                
             }
         })
         
@@ -154,7 +150,7 @@ extension ViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
   
         
-        return heroesModel.count    }
+        return episodeModel.count    }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "CellHero", for: indexPath) as! TableViewCell
@@ -179,33 +175,131 @@ extension ViewController: UITableViewDelegate {
     }
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let abstractView = UIView()
-   
+        
         
         return abstractView
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         performSegue(withIdentifier: "goToDetailedCharacters", sender: self)
     }
-  
+    
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let path = tableView.indexPathForSelectedRow
         let index = path?.row
         
         let secondVc = segue.destination as! SecondViewController
-        secondVc.topTitle.text =  heroesModel[index!].name
-        secondVc.imageCharacter.downloaded(from: heroesModel[index!].img, contentMode: .scaleToFill)
-        secondVc.location.text = heroesModel[index!].nameLocation
-        secondVc.episodeText.text = episodeModel[index!].name
-        secondVc.statusLabel.text = heroesModel[index!].status
-    
+        DispatchQueue.main.async {
+            
+            
+            secondVc.topTitle.text =  self.heroesModel[index!].name
+            secondVc.imageCharacter.downloaded(from: self.heroesModel[index!].img, contentMode: .scaleToFill)
+            secondVc.location.text = self.heroesModel[index!].nameLocation
+            secondVc.episodeText.text = self.episodeModel[index!].name
+            secondVc.statusLabel.text = self.heroesModel[index!].status
+        }
+        secondVc.numberIndex = index!
+        var characters = [DataCharactersLocation]()
+        
+        
         secondVc.alsoLabel.text = ("Also from \"\(episodeModel[index!].name)\"")
+        
+        
+        let sourceText = episodeModel[index!].characters
+        var characterID = extractNumbers(from: sourceText)
+ 
        
-    
-  
+        
+        
+       
+       
+            for characterURL in episodeModel[index!].characters{
                 
+                guard let url = URL(string: characterURL) else  {print("it doesn't work closure")
+                    continue
+                }
+                URLSession.shared.dataTask(with: url) { (data, response, error) in
+                    if let error = error {
+                        print( "\(error.localizedDescription)")
+                    }
+                    if let data = data {
+                        do {
+                         
+                            let jsonCharactersLocation = try JSONDecoder().decode(DataCharactersLocation.self, from: data)
+                      characters.append(jsonCharactersLocation)
+                            DispatchQueue.main.async {
+                               
+                                secondVc.nameHeroForCell = characters.first!.name
+                                secondVc.totalNumbersCharacters = characters.count
+                                print(characters.count)
+                                
+                                
+                            }
+                          
+                           
+                            
+                       
+                        
+                            
+                      
+                      
+                        }
+                        catch {
+                            print("\(error.localizedDescription)")
+                        }
+                    }
+                
+                    
+                    
+                }.resume()
+          
+              
+            }
+   
+        
+
+    
+        
+        
+        
+        
+        
+        
+    
+
+
+        
+        
+
+
+   
+            }
+
+    func extractNumbers(from array: [String]) -> [Int] {
+        var result = [Int]()
+        let regex = try! NSRegularExpression(pattern: "\\d+")
+        
+        for string in array {
+            let range = NSRange(location: 0, length: string.utf16.count)
+            let matches = regex.matches(in: string, options: [], range: range)
+            
+            for match in matches {
+                if let number = Int((string as NSString).substring(with: match.range)) {
+                    result.append(number)
+                }
             }
         }
+        
+        return result
+    }
+                            
+        }
+extension String {
+ func parseToInt() -> Int? {
+    return Int(self.components(separatedBy: CharacterSet.decimalDigits.inverted).joined())
+ }
+}
+    
       
         
         

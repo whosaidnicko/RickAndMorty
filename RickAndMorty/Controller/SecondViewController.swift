@@ -8,7 +8,10 @@
 import UIKit
 
 final class SecondViewController: UIViewController {
-    
+    var totalNumbersCharacters = 0
+    var nameHeroForCell: String = ""
+    var listOfCharacters = [HeroesModel]()
+    var numberIndex = 0
     var topTitle = UILabel()
     var imageCharacter = UIImageView()
     let textLastKnown = UILabel()
@@ -21,9 +24,15 @@ final class SecondViewController: UIViewController {
     let alsoLabel = UILabel()
 
         
-    private let tableView = UITableView()
+    @IBOutlet weak var tableView: UITableView!
+ 
     override func viewDidLoad() {
         super.viewDidLoad()
+      
+      
+        
+       
+
         
         alsoLabel.layer.frame = CGRect(x: 17, y: 180, width: 400, height: 300)
         alsoLabel.font = UIFont(name: "HelveticaNeue-CondensedBlack", size: 23)
@@ -102,7 +111,10 @@ final class SecondViewController: UIViewController {
         view.addSubview(topTitle)
 
         tableView.dataSource = self
-        tableView.register(UINib(nibName: "SecondCell", bundle: nil), forCellReuseIdentifier: "SecondCellHero")
+        tableView.register(UINib(nibName: "SecondCell", bundle: nil), forCellReuseIdentifier: "SecondCell")
+     
+        tableView.rowHeight = 100
+        tableView.reloadData()
         
     }
     
@@ -115,14 +127,26 @@ final class SecondViewController: UIViewController {
 
 
 extension SecondViewController: UITableViewDataSource {
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        3
+     
+        return totalNumbersCharacters
+       
+      
     }
     
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "SecondCellHero", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "SecondCell", for: indexPath) as! SecondCell
+        DispatchQueue.main.async { [self] in
+            cell.nameHero.text = nameHeroForCell
+        }
+
+
+  
         return cell
     }
 }

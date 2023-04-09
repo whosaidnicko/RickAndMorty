@@ -8,9 +8,16 @@
 import UIKit
 
 class SecondCell: UITableViewCell {
+    
+    let nameHero = UILabel()
 
     override func awakeFromNib() {
         super.awakeFromNib()
+        
+        nameHero.text = "Hello"
+        nameHero.layer.frame = CGRect(x: 0, y: 0, width: 300, height: 15)
+
+     addSubview(nameHero)
         
         // Initialization code
     }

@@ -15,4 +15,5 @@ struct EpisodeData: Decodable {
 
 struct Results: Decodable {
     public let name: String
+    public let characters: [String]
 }
