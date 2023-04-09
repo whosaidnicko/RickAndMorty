@@ -11,6 +11,7 @@ import UIKit
 
 final class ViewController: UIViewController{
     var path =  IndexPath()
+    var characters = [DataCharactersLocation]()
     
     
 
@@ -180,7 +181,11 @@ extension ViewController: UITableViewDelegate {
         return abstractView
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        performSegue(withIdentifier: "goToDetailedCharacters", sender: self)
+        DispatchQueue.main.async {
+            
+            
+            self.performSegue(withIdentifier: "goToDetailedCharacters", sender: self)
+        }
     }
     
     
@@ -197,9 +202,12 @@ extension ViewController: UITableViewDelegate {
             secondVc.location.text = self.heroesModel[index!].nameLocation
             secondVc.episodeText.text = self.episodeModel[index!].name
             secondVc.statusLabel.text = self.heroesModel[index!].status
+            secondVc.episodeModel.text = self.episodeModel[index!].name
+
         }
+        secondVc.totalNumbersCharacters = self.episodeModel[index!].characters.count
         secondVc.numberIndex = index!
-        var characters = [DataCharactersLocation]()
+      
         
         
         secondVc.alsoLabel.text = ("Also from \"\(episodeModel[index!].name)\"")
@@ -207,6 +215,7 @@ extension ViewController: UITableViewDelegate {
         
         let sourceText = episodeModel[index!].characters
         var characterID = extractNumbers(from: sourceText)
+      
  
        
         
@@ -214,11 +223,12 @@ extension ViewController: UITableViewDelegate {
        
        
             for characterURL in episodeModel[index!].characters{
-                
+           
+             
                 guard let url = URL(string: characterURL) else  {print("it doesn't work closure")
                     continue
                 }
-                URLSession.shared.dataTask(with: url) { (data, response, error) in
+                URLSession.shared.dataTask(with: url) { [self] (data, response, error) in
                     if let error = error {
                         print( "\(error.localizedDescription)")
                     }
@@ -226,15 +236,23 @@ extension ViewController: UITableViewDelegate {
                         do {
                          
                             let jsonCharactersLocation = try JSONDecoder().decode(DataCharactersLocation.self, from: data)
-                      characters.append(jsonCharactersLocation)
+                            
+               
+                            characters.append(jsonCharactersLocation)
+                          
                             DispatchQueue.main.async {
+                                secondVc.character.append(jsonCharactersLocation)
+                             
                                
-                                secondVc.nameHeroForCell = characters.first!.name
-                                secondVc.totalNumbersCharacters = characters.count
-                                print(characters.count)
+                              
+                               
+                                
+                           
+                            
                                 
                                 
                             }
+                        
                           
                            
                             
@@ -252,7 +270,10 @@ extension ViewController: UITableViewDelegate {
                     
                     
                 }.resume()
-          
+        
+             
+      
+            
               
             }
    

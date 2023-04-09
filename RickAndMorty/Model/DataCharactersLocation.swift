@@ -9,4 +9,7 @@ import Foundation
 
 struct DataCharactersLocation:Decodable {
     let name: String
+    let image: String
+    let location: Locations
 }
+

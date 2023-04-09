@@ -65,7 +65,7 @@ class TableViewCell: UITableViewCell{
     
     
     func setShadow() {
-        shadow.layer.frame = CGRect(x: 32, y: 26, width: 320 , height: 91)
+        shadow.layer.frame = CGRect(x: 32, y: 26, width: 320 , height: 87)
         shadow.layer.masksToBounds = false
         shadow.layer.shadowOffset = CGSizeMake(0, 0)
         shadow.layer.shadowColor = UIColor.black.cgColor
