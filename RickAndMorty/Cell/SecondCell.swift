@@ -23,6 +23,7 @@ class SecondCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
+        
         setShadow()
         backMainViewSet()
         setImage()

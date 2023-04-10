@@ -31,6 +31,17 @@ final class SecondViewController: UIViewController {
  
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = .white
+        
+        if let navBar = navigationController?.navigationBar {
+
+            // Set the background color
+            navBar.barTintColor = UIColor.white
+            navBar.layer.opacity = 1
+
+            // Set the text color of the navigation bar title
+            navBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
+        }
         
         print(character)
       
@@ -112,7 +123,8 @@ final class SecondViewController: UIViewController {
         imageCharacter.layer.masksToBounds = true
         imageCharacter.layer.cornerRadius = 10
         view.addSubview(imageCharacter)
-
+        
+        topTitle.textColor = .black
         topTitle.lineBreakMode = NSLineBreakMode.byWordWrapping
         topTitle.sizeToFit()
         topTitle.numberOfLines = 2
@@ -142,21 +154,23 @@ extension SecondViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+       
      
-      totalNumbersCharacters
+
+       return character.count
       
     }
     
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "SecondCell", for: indexPath) as! SecondCell
-        DispatchQueue.main.async { [self] in
+      
             cell.nameHero.text = character[indexPath.row].name
             cell.pictureHero.downloaded(from: character[indexPath.row].image)
             cell.labelLocation.text = character[indexPath.row].location.name
             cell.dinamicLabelEpisode.text =  episodeModel.text
-                
-        }
+        cell.backgroundColor = .white
+        
 
 
   

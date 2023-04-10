@@ -23,13 +23,8 @@ struct NetworkManager {
                     let json = try JSONDecoder().decode(HeroesData.self, from: data)
                     
                     let results: [HeroesModel] = json.results.map {.init(name: $0.name, img: $0.image, nameLocation: $0.location.name, status: $0.status, id: $0.id)}
-                    
-                    
-                    
-                    
+       
                     completion(.success(results))
-                    
-                    
                 }
                 catch {
                     completion(.failure(error))
