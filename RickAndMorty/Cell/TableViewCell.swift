@@ -20,6 +20,11 @@ class TableViewCell: UITableViewCell{
     lazy var staticLabelEpisode = UILabel()
     lazy var dinamicLabelEpisode = UILabel()
     
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        pictureHero.image = UIImage(named: "placeholder-image")
+    }
     override func awakeFromNib() {
         super.awakeFromNib()
         

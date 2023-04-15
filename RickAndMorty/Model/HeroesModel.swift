@@ -14,5 +14,6 @@ struct HeroesModel:Decodable {
     public let nameLocation: String
     public let status: String
     public let id: Int
+    public let episode: [String]
 
 }

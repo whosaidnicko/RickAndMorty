@@ -43,7 +43,7 @@ final class SecondViewController: UIViewController {
             navBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
         }
         
-        print(character)
+     
       
       
       

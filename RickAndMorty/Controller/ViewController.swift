@@ -12,8 +12,9 @@ import UIKit
 final class ViewController: UIViewController{
     var path =  IndexPath()
     var characters = [DataCharactersLocation]()
+    var episodeName = [String]()
     
-    
+    var urls: [Any] = []
     
     private  var headerTitle: UILabel{
         let headerTitle = UILabel()
@@ -37,44 +38,37 @@ final class ViewController: UIViewController{
     }
     private var episodeModel: [EpisodeModel] = []
     private var heroesModel: [HeroesModel] = []
-    private let urls = URLs()
+
     private var networkManager = NetworkManager()
     
     
     
     
-    
+   
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //UIFont.familyNames.forEach({ familyName in
-        //  let fontNames = UIFont.fontNames(forFamilyName: familyName)
-        //print(familyName, fontNames)
-        //  })
-        
         headerTitle
+
         tableView.rowHeight = 120
         tableView.estimatedRowHeight = 120
         tableView.backgroundColor = .white
         tableView.dataSource = self
         tableView.delegate = self
-        
         tableView.register(UINib(nibName: "TableViewCell", bundle: nil), forCellReuseIdentifier: "CellHero")
         tableView.reloadData()
         getPost()
-        
-        
-        
-       
-        
     
         
+        
+       
+   
        
         
-        
-        
+   
     }
+    
     func getPost() {
         
         networkManager.getPost(url: URLs.urlHeroes, completion: {[weak self] result in
@@ -85,16 +79,10 @@ final class ViewController: UIViewController{
                 print("Data is succsfull fetched !")
                 self?.heroesModel = succes
                 self?.getEpisode()
-              
-                
-                
-                
-                
-                
             }
         })
-        
     }
+    
     func getEpisode() {
         networkManager.getEpisode(url: URLs.urlEpisode, completion: {[weak self] result in
             switch result {
@@ -107,49 +95,12 @@ final class ViewController: UIViewController{
                     [weak self] in
                     self?.tableView.reloadData()
                 }
-             
-                
-                
             }
         })
-        
     }
-    
-    
-    
     
 }
 
-//MARK: -  download Image
-extension UIImageView {
-    
-    func downloaded(from url: URL, contentMode mode: ContentMode = .scaleAspectFit) {
-        contentMode = mode
-        URLSession.shared.dataTask(with: url) { data, response, error in
-            guard
-                let httpURLResponse = response as? HTTPURLResponse, httpURLResponse.statusCode == 200,
-                let mimeType = response?.mimeType, mimeType.hasPrefix("image"),
-                let data = data, error == nil,
-                let image = UIImage(data: data)
-            else { return }
-            DispatchQueue.main.async() { [weak self] in
-                self?.image = image
-            }
-        }.resume()
-    }
-    func downloaded(from link: String, contentMode mode: ContentMode = .scaleAspectFit) {
-        guard let url = URL(string: link) else { return }
-        downloaded(from: url, contentMode: mode)
-    }
-    func makeRounded() {
-        let radius = self.bounds.height / 2.0
-        self.layer.cornerRadius = radius
-        self.layer.masksToBounds = true
-        self.clipsToBounds = true
-        
-        self.contentMode = .scaleAspectFill
-    }
-}
 
 
 
@@ -159,9 +110,11 @@ extension ViewController: UITableViewDataSource {
     
     
     
+    
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        
+      
         return heroesModel.count
         
     }
@@ -176,7 +129,23 @@ extension ViewController: UITableViewDataSource {
         cell.backgroundColor = .black
         cell.pictureHero.downloaded(from: heroesModel[indexPath.row].img  , contentMode: .scaleAspectFill)
         cell.labelLocation.text = heroesModel[indexPath.row].nameLocation
-        cell.dinamicLabelEpisode.text = episodeModel[indexPath.row].name
+        
+        cell.dinamicLabelEpisode.text = heroesModel[0].episode[indexPath.row]
+
+    
+        
+        
+       
+         
+            
+        
+        
+    
+       
+      
+     
+        
+       
         
         return cell
         
@@ -214,7 +183,7 @@ extension ViewController: UITableViewDelegate {
                 secondVc.episodeText.text = self.episodeModel[index!].name
                 secondVc.statusLabel.text = self.heroesModel[index!].status
                 secondVc.episodeModel.text = self.episodeModel[index!].name
-                secondVc.character.remove(at: index!)
+        
             }
             
       
@@ -229,17 +198,8 @@ extension ViewController: UITableViewDelegate {
         
         
         secondVc.alsoLabel.text = ("Also from \"\(episodeModel[index!].name)\"")
-        
-        
-        let sourceText = episodeModel[index!].characters
-        var characterID = extractNumbers(from: sourceText)
-        
-        
-        
-        
-        
-        
-        
+     
+    
         for characterURL in episodeModel[index!].characters{
             
             
@@ -261,76 +221,49 @@ extension ViewController: UITableViewDelegate {
                         DispatchQueue.main.async { 
                             secondVc.tableView.reloadData()
                         }
-                        
-                        
-                      
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
                     }
                     catch {
                         print("\(error.localizedDescription)")
                     }
                 }
-                
-                
-                
             }.resume()
-            
-            
-            
-            
-            
         }
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
     }
     
-    func extractNumbers(from array: [String]) -> [Int] {
-        var result = [Int]()
-        let regex = try! NSRegularExpression(pattern: "\\d+")
-        
-        for string in array {
-            let range = NSRange(location: 0, length: string.utf16.count)
-            let matches = regex.matches(in: string, options: [], range: range)
-            
-            for match in matches {
-                if let number = Int((string as NSString).substring(with: match.range)) {
-                    result.append(number)
-                }
+}
+
+//MARK: -  download Image
+
+extension UIImageView {
+    
+    func downloaded(from url: URL, contentMode mode: ContentMode = .scaleAspectFit) {
+        contentMode = mode
+        URLSession.shared.dataTask(with: url) { data, response, error in
+            guard
+                let httpURLResponse = response as? HTTPURLResponse, httpURLResponse.statusCode == 200,
+                let mimeType = response?.mimeType, mimeType.hasPrefix("image"),
+                let data = data, error == nil,
+                let image = UIImage(data: data)
+            else { return }
+            DispatchQueue.main.async() { [weak self] in
+                self?.image = image
             }
-        }
+        }.resume()
+    }
+    func downloaded(from link: String, contentMode mode: ContentMode = .scaleAspectFit) {
+        guard let url = URL(string: link) else { return }
+        downloaded(from: url, contentMode: mode)
+    }
+    func makeRounded() {
+        let radius = self.bounds.height / 2.0
+        self.layer.cornerRadius = radius
+        self.layer.masksToBounds = true
+        self.clipsToBounds = true
         
-        return result
-    }
-    
-}
-extension String {
-    func parseToInt() -> Int? {
-        return Int(self.components(separatedBy: CharacterSet.decimalDigits.inverted).joined())
+        self.contentMode = .scaleAspectFill
     }
 }
+
 
 
 
