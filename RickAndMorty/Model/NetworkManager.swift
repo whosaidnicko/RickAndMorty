@@ -27,8 +27,10 @@ struct NetworkManager {
                     let json = try JSONDecoder().decode(HeroesData.self, from: data)
                     // Going through each character and getting first episode he was seen.
                     let urlss = json.results.map({$0.episode.first})
+                    print(urlss)
                     
                     var urls = [String]()
+                    
                     // Going through loop.
                     for urlse in urlss {
                         urls.append(urlse ?? "Nothing")

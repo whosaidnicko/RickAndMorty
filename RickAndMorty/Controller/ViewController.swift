@@ -15,7 +15,7 @@ final class ViewController: UIViewController{
     var path =  IndexPath()
     var idForEpisode = "1"
     var urls: [Any] = []
-
+    
     private  var headerTitle: UILabel{
         let headerTitle = UILabel()
         headerTitle.text = "Rick and Morty"
