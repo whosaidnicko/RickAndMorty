@@ -30,16 +30,19 @@ class SecondCell: UITableViewCell {
         setShadow()
         backMainViewSet()
         setImage()
-        setLabel()
+        setNameLabel()
         setLabelLocation()
         setStaticLabelEp()
         setDinamicLabelEp()
     }
 
-    func setLabel() {
-        nameHero.layer.frame = CGRect(x: 145, y: 24, width: 300, height: 30)
+    func setNameLabel() {
+        nameHero.layer.frame = CGRect(x: 145, y: 0, width: 210, height: 70)
         nameHero.textColor = #colorLiteral(red: 1, green: 0.6838926673, blue: 0, alpha: 1)
         nameHero.font = UIFont(name: "HelveticaNeue-CondensedBlack", size: 20)
+        nameHero.numberOfLines = 0
+        nameHero.lineBreakMode = .byWordWrapping
+        nameHero.preferredMaxLayoutWidth = 230
         addSubview(nameHero)
     }
     
@@ -72,9 +75,12 @@ class SecondCell: UITableViewCell {
     }
     
     func setLabelLocation(){
-        labelLocation.layer.frame = CGRect(x: 145, y: 44, width: 250, height: 30)
+        labelLocation.layer.frame = CGRect(x: 145, y: 46, width: 250, height: 30)
         labelLocation.textColor = .systemGray
         labelLocation.font = .boldSystemFont(ofSize: 10)
+        labelLocation.numberOfLines = 0
+        labelLocation.lineBreakMode = .byWordWrapping
+        labelLocation.preferredMaxLayoutWidth = 20
         addSubview(labelLocation)
     }
     
@@ -83,13 +89,19 @@ class SecondCell: UITableViewCell {
         staticLabelEpisode.layer.frame = CGRect(x: 145, y: 35, width: 80, height: 80)
         staticLabelEpisode.textColor = .systemGray
         staticLabelEpisode.font = .boldSystemFont(ofSize: 10)
+        staticLabelEpisode.numberOfLines = 0
+        staticLabelEpisode.lineBreakMode = .byWordWrapping
+        staticLabelEpisode.preferredMaxLayoutWidth = 20
         addSubview(staticLabelEpisode)
     }
     
     func setDinamicLabelEp() {
-        dinamicLabelEpisode.layer.frame = CGRect(x: 145, y: 47, width: 170, height: 80)
+        dinamicLabelEpisode.layer.frame = CGRect(x: 145, y: 55, width: 200, height: 80)
         dinamicLabelEpisode.textColor = .systemGray
         dinamicLabelEpisode.font = .boldSystemFont(ofSize: 10)
+        dinamicLabelEpisode.numberOfLines = 0
+        dinamicLabelEpisode.lineBreakMode = .byWordWrapping
+        dinamicLabelEpisode.preferredMaxLayoutWidth = 260
         addSubview(dinamicLabelEpisode)
     }
 }

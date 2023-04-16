@@ -8,8 +8,11 @@
 import UIKit
 
 final class SecondViewController: UIViewController {
-    //Adding UI
+    
+    let screenSize = UIScreen.main.bounds.size
     public var character = [DataCharactersLocation]()
+    //Adding UI
+    public let backButton = UIButton(type: .system)
     public let episodeModel = UILabel()
     public let imageCharacter = UIImageView()
     private let textLastKnown = UILabel()
@@ -21,30 +24,32 @@ final class SecondViewController: UIViewController {
     public let   statusLabel = UILabel()
     public let alsoLabel = UILabel()
     public let topTitle = UILabel()
-    
-    
     @IBOutlet weak var tableView: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         //all UI set to the ViewController
         settingAllUI()
+      
         view.backgroundColor = .white
-        
-        navigationController?.navigationBar.isHidden = false
-        navigationController?.navigationBar.backIndicatorImage = UIImage()
-        navigationController?.navigationBar.backIndicatorTransitionMaskImage = UIImage()
-        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.clear]
+        navigationController?.navigationBar.isHidden = true
         // TableView
         tableView.delegate = self
         tableView.dataSource = self
+  
         tableView.register(UINib(nibName: "SecondCell", bundle: nil), forCellReuseIdentifier: "SecondCell")
         tableView.rowHeight = 150
+
         tableView.reloadData()
     }
+    // Actions after backButton pressed.
+    @objc func backButtonPressed() {
+        navigationController?.popViewController(animated: true)
+    }
     //MARK: -  Setting UI
-    
     func settingAllUI()  {
+        
+        createButton()
         setAlsoLabel()
         setStatusDinamic()
         setStatusImg()
@@ -56,10 +61,36 @@ final class SecondViewController: UIViewController {
         setImageCharacter()
         setTopTitle()
     }
+    func createButton() {
+        backButton.setImage(UIImage(systemName:"arrowshape.left.fill"), for: .normal)
+        backButton.tintColor = .black
+        backButton.setTitle("Back", for: .normal)
+        backButton.addTarget(self, action: #selector(backButtonPressed), for: .touchUpInside)
+        // Add the button to the view
+        view.addSubview(backButton)
+        // Depending on iPhone , will be button located.
+        if screenSize.height < 668 {
+            // Lower
+            backButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 19).isActive = true
+        }
+        else {
+            // Higher
+            backButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: -20).isActive = true
+            print("second")
+        }
+        // Set the constraints for the button
+        backButton.translatesAutoresizingMaskIntoConstraints = false
+        backButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 8).isActive = true
+        backButton.widthAnchor.constraint(equalToConstant: 80).isActive = true
+        backButton.heightAnchor.constraint(equalToConstant: 44).isActive = true
+    }
     
     func setAlsoLabel(){
-        alsoLabel.layer.frame = CGRect(x: 25, y: 156, width: 400, height: 300)
-        alsoLabel.font = UIFont(name: "HelveticaNeue-CondensedBlack", size: 23)
+        alsoLabel.layer.frame = CGRect(x: 25, y: 260, width: 350, height: 150)
+        alsoLabel.font = UIFont(name: "HelveticaNeue-CondensedBlack", size: 22)
+        alsoLabel.numberOfLines = 0
+        alsoLabel.lineBreakMode = .byWordWrapping
+        alsoLabel.preferredMaxLayoutWidth = 160
         view.addSubview(alsoLabel)
     }
     
@@ -101,9 +132,12 @@ final class SecondViewController: UIViewController {
     }
     
     func setFirstSeenDinamic() {
-        firstSeenDinamic.layer.frame = CGRect(x: 180, y: 190, width: 200, height: 30)
+        firstSeenDinamic.layer.frame = CGRect(x: 180, y: 190, width: 200, height: 40)
         firstSeenDinamic.textColor = .systemGray
         firstSeenDinamic.font =  .boldSystemFont(ofSize: 13)
+        firstSeenDinamic.numberOfLines = 0
+        firstSeenDinamic.lineBreakMode = .byWordWrapping
+        firstSeenDinamic.preferredMaxLayoutWidth = 250
         view.addSubview(firstSeenDinamic)
     }
     
@@ -115,9 +149,12 @@ final class SecondViewController: UIViewController {
         view.addSubview(firstSeen)
     }
     func setLabelLocation() {
-        location.layer.frame = CGRect(x: 180, y: 144, width: 300, height: 30)
+        location.layer.frame = CGRect(x: 180, y: 144, width: 190, height: 30)
         location.textColor = .systemGray
         location.font =  .boldSystemFont(ofSize: 12)
+        location.numberOfLines = 0
+        location.lineBreakMode = .byWordWrapping
+        location.preferredMaxLayoutWidth = 200
         view.addSubview(location)
     }
     
@@ -137,21 +174,15 @@ final class SecondViewController: UIViewController {
     
     func setTopTitle() {
         topTitle.textColor = .black
-        topTitle.lineBreakMode = NSLineBreakMode.byWordWrapping
-        topTitle.sizeToFit()
-        topTitle.numberOfLines = 2
-        topTitle.layer.frame = CGRect(x: 25, y: 70, width: 400, height: 50)
-        topTitle.font = UIFont(name: "HelveticaNeue-CondensedBlack", size: 35)
+        topTitle.layer.frame = CGRect(x: 25, y: 50, width: 340, height: 100)
+        topTitle.font = UIFont(name: "HelveticaNeue-CondensedBlack", size: 30)
+        topTitle.numberOfLines = 0
+        topTitle.lineBreakMode = .byWordWrapping
+        topTitle.preferredMaxLayoutWidth = 340
+        
         view.addSubview(topTitle)
     }
-    
-    
 }
-
-
-
-
-
 //MARK: - UITableViewDataSource
 extension SecondViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -166,11 +197,11 @@ extension SecondViewController: UITableViewDataSource {
         cell.labelLocation.text = character[indexPath.row].location.name
         cell.dinamicLabelEpisode.text =  episodeModel.text
         cell.backgroundColor = .white
+        
         // Cache image + setting
         if let  imageUrl = URL(string: character[indexPath.row].image) {
             cell.pictureHero.sd_setImage(with: imageUrl, placeholderImage: UIImage(named: "placeholder"))
         }
-        
         return cell
     }
 }
@@ -190,16 +221,19 @@ extension SecondViewController: UITableViewDelegate {
             // Logic of statusImage
             if self.statusLabel.text == "Dead" {
                 self.statusImage.layer.borderColor = UIColor.red.cgColor
-                
             }
             else if self.statusLabel.text == "Alive" {
                 self.statusImage.layer.borderColor = UIColor.systemGreen.cgColor
-                
             }
             else {
                 self.statusImage.layer.borderColor = UIColor.purple.cgColor
-                
             }
         }
     }
+    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
 }
+
+
+

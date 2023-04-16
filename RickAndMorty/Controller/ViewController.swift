@@ -15,7 +15,7 @@ final class ViewController: UIViewController{
     var path =  IndexPath()
     var idForEpisode = "1"
     var urls: [Any] = []
-    
+
     private  var headerTitle: UILabel{
         let headerTitle = UILabel()
         headerTitle.text = "Rick and Morty"
@@ -35,15 +35,19 @@ final class ViewController: UIViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        
         getCharacter()
         headerTitle
-        // tableView settings
+        // TableView settings
         tableView.rowHeight = 120
         tableView.backgroundColor = .white
         tableView.dataSource = self
         tableView.delegate = self
         tableView.register(UINib(nibName: "TableViewCell", bundle: nil), forCellReuseIdentifier: "CellHero")
         tableView.reloadData()
+        //Hiding navBar
+        navigationController?.navigationBar.isHidden = true
+        
     }
     
     func getCharacter() {
@@ -51,7 +55,7 @@ final class ViewController: UIViewController{
         let maxNumber = 40
         let randomNumber = String(Int.random(in: 0...maxNumber))
         // Fetching character
-        networkManager.getCharacter(url: URLs.urlHeroes + randomNumber, completion: {[weak self] result in
+        networkManager.getCharacter(url: URLs.urlHeroes + "\(randomNumber)", completion: {[weak self] result in
             switch result {
                 // Error.
             case .failure(let error):
@@ -67,7 +71,7 @@ final class ViewController: UIViewController{
     }
     
     func getEpisode() {
-        networkManager.getEpisode(url: URLs.urlEpisode + idForEpisode, completion: {[weak self] result in
+        networkManager.getEpisode(url: URLs.urlEpisode + "\(idForEpisode)", completion: {[weak self] result in
             switch result {
                 // Error.
             case .failure(let error):

@@ -30,7 +30,7 @@ class TableViewCell: UITableViewCell{
         setShadow()
         backMainViewSet()
         setImage()
-        setLabel()
+        setNameHero()
         setLabelLocation()
         setStaticLabelEp()
         setDinamicLabelEp()
@@ -44,10 +44,13 @@ class TableViewCell: UITableViewCell{
         super.setSelected(selected, animated: animated)
         }
     
-    func setLabel() {
-        nameHero.layer.frame = CGRect(x: 120, y: 28, width: 300, height: 30)
+    func setNameHero() {
+        nameHero.layer.frame = CGRect(x: 120, y: 17, width: 230, height: 50)
         nameHero.textColor = #colorLiteral(red: 1, green: 0.6838926673, blue: 0, alpha: 1)
-        nameHero.font = UIFont(name: "HelveticaNeue-CondensedBlack", size: 20)
+        nameHero.font = UIFont(name: "HelveticaNeue-CondensedBlack", size: 19)
+        nameHero.numberOfLines = 0
+        nameHero.lineBreakMode = .byWordWrapping
+        nameHero.preferredMaxLayoutWidth = 320
         addSubview(nameHero)
     }
     
@@ -79,24 +82,30 @@ class TableViewCell: UITableViewCell{
     }
     
     func setLabelLocation(){
-        labelLocation.layer.frame = CGRect(x: 120, y: 53, width: 250, height: 30)
+        labelLocation.layer.frame = CGRect(x: 120, y: 52, width: 250, height: 30)
         labelLocation.textColor = .systemGray
-        labelLocation.font = .boldSystemFont(ofSize: 14)
+        labelLocation.font = .boldSystemFont(ofSize: 12)
+        labelLocation.numberOfLines = 0
+        labelLocation.lineBreakMode = .byWordWrapping
+        labelLocation.preferredMaxLayoutWidth = 310
         addSubview(labelLocation)
     }
     
     func setStaticLabelEp() {
         staticLabelEpisode.text = "Episode:"
-        staticLabelEpisode.layer.frame = CGRect(x: 120, y: 48, width: 80, height: 80)
+        staticLabelEpisode.layer.frame = CGRect(x: 120, y: 44, width: 80, height: 80)
         staticLabelEpisode.textColor = .systemGray
-        staticLabelEpisode.font = .boldSystemFont(ofSize: 10)
+        staticLabelEpisode.font = .boldSystemFont(ofSize: 12)
         addSubview(staticLabelEpisode)
     }
     
     func setDinamicLabelEp() {
-        dinamicLabelEpisode.layer.frame = CGRect(x: 120, y: 59, width: 170, height: 80)
+        dinamicLabelEpisode.layer.frame = CGRect(x: 120, y: 59, width: 300, height: 80)
         dinamicLabelEpisode.textColor = .systemGray
         dinamicLabelEpisode.font = .boldSystemFont(ofSize: 10)
+        dinamicLabelEpisode.numberOfLines = 0
+        dinamicLabelEpisode.lineBreakMode = .byWordWrapping
+        dinamicLabelEpisode.preferredMaxLayoutWidth = 20
         addSubview(dinamicLabelEpisode)
     }
 }
