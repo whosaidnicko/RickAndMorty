@@ -11,6 +11,8 @@
 		F4523CBA29DA130F0036A40D /* SecondCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4523CB829DA130F0036A40D /* SecondCell.swift */; };
 		F4523CBB29DA130F0036A40D /* SecondCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F4523CB929DA130F0036A40D /* SecondCell.xib */; };
 		F4523CBD29DA13FC0036A40D /* SecondViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4523CBC29DA13FC0036A40D /* SecondViewController.swift */; };
+		F457878F29EC1D0000668491 /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = F457878E29EC1D0000668491 /* SDWebImage */; };
+		F457879129EC1D0000668491 /* SDWebImageMapKit in Frameworks */ = {isa = PBXBuildFile; productRef = F457879029EC1D0000668491 /* SDWebImageMapKit */; };
 		F45DFAE829C2585D005BE7C6 /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F45DFAE629C2585D005BE7C6 /* TableViewCell.swift */; };
 		F45DFAE929C2585D005BE7C6 /* TableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F45DFAE729C2585D005BE7C6 /* TableViewCell.xib */; };
 		F48EDA1729D8C3AA00F0A7B1 /* EpisodeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F48EDA1629D8C3AA00F0A7B1 /* EpisodeModel.swift */; };
@@ -55,6 +57,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F457879129EC1D0000668491 /* SDWebImageMapKit in Frameworks */,
+				F457878F29EC1D0000668491 /* SDWebImage in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -159,6 +163,10 @@
 			dependencies = (
 			);
 			name = RickAndMorty;
+			packageProductDependencies = (
+				F457878E29EC1D0000668491 /* SDWebImage */,
+				F457879029EC1D0000668491 /* SDWebImageMapKit */,
+			);
 			productName = RickAndMorty;
 			productReference = F4DF55A429BA1F36009B8E9C /* RickAndMorty.app */;
 			productType = "com.apple.product-type.application";
@@ -187,6 +195,9 @@
 				Base,
 			);
 			mainGroup = F4DF559B29BA1F36009B8E9C;
+			packageReferences = (
+				F457878D29EC1D0000668491 /* XCRemoteSwiftPackageReference "SDWebImage" */,
+			);
 			productRefGroup = F4DF55A529BA1F36009B8E9C /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -448,6 +459,30 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		F457878D29EC1D0000668491 /* XCRemoteSwiftPackageReference "SDWebImage" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SDWebImage/SDWebImage";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		F457878E29EC1D0000668491 /* SDWebImage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F457878D29EC1D0000668491 /* XCRemoteSwiftPackageReference "SDWebImage" */;
+			productName = SDWebImage;
+		};
+		F457879029EC1D0000668491 /* SDWebImageMapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F457878D29EC1D0000668491 /* XCRemoteSwiftPackageReference "SDWebImage" */;
+			productName = SDWebImageMapKit;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = F4DF559C29BA1F36009B8E9C /* Project object */;
 }

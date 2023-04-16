@@ -7,8 +7,9 @@
 
 import UIKit
 
+//MARK: -  SETTING UI
+
 class SecondCell: UITableViewCell {
-    
     lazy var nameHero = UILabel()
     lazy var  pictureHero = UIImageView()
     lazy var entireView = UIView()
@@ -18,14 +19,13 @@ class SecondCell: UITableViewCell {
     lazy var labelLocation = UILabel()
     lazy var staticLabelEpisode = UILabel()
     lazy var dinamicLabelEpisode = UILabel()
- 
+
     override func prepareForReuse() {
         super.prepareForReuse()
         pictureHero.image = UIImage(named: "placeholder-image")
     }
     override func awakeFromNib() {
         super.awakeFromNib()
-        
         
         setShadow()
         backMainViewSet()
@@ -34,24 +34,12 @@ class SecondCell: UITableViewCell {
         setLabelLocation()
         setStaticLabelEp()
         setDinamicLabelEp()
-        
-        // Initialization code
     }
 
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
-    }
     func setLabel() {
-        
         nameHero.layer.frame = CGRect(x: 145, y: 24, width: 300, height: 30)
         nameHero.textColor = #colorLiteral(red: 1, green: 0.6838926673, blue: 0, alpha: 1)
-
-        
-        
         nameHero.font = UIFont(name: "HelveticaNeue-CondensedBlack", size: 20)
-        
         addSubview(nameHero)
     }
     
@@ -61,8 +49,8 @@ class SecondCell: UITableViewCell {
         pictureHero.layer.cornerRadius = 10
         pictureHero.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMinXMinYCorner]
         addSubview(pictureHero)
+        
     }
-    
     
     func setShadow() {
         shadow.layer.frame = CGRect(x: 32, y: 19, width: 320 , height: 108)
@@ -74,6 +62,7 @@ class SecondCell: UITableViewCell {
         shadow.backgroundColor = .white
         addSubview(shadow)
     }
+    
     func backMainViewSet() {
         backMainView.layer.frame = CGRect(x: 25, y: 16, width: 330, height: 114)
         backMainView.backgroundColor = .white
@@ -87,7 +76,6 @@ class SecondCell: UITableViewCell {
         labelLocation.textColor = .systemGray
         labelLocation.font = .boldSystemFont(ofSize: 10)
         addSubview(labelLocation)
-        
     }
     
     func setStaticLabelEp() {
@@ -96,18 +84,13 @@ class SecondCell: UITableViewCell {
         staticLabelEpisode.textColor = .systemGray
         staticLabelEpisode.font = .boldSystemFont(ofSize: 10)
         addSubview(staticLabelEpisode)
-        
     }
+    
     func setDinamicLabelEp() {
         dinamicLabelEpisode.layer.frame = CGRect(x: 145, y: 47, width: 170, height: 80)
-        
-        
         dinamicLabelEpisode.textColor = .systemGray
         dinamicLabelEpisode.font = .boldSystemFont(ofSize: 10)
         addSubview(dinamicLabelEpisode)
-        
     }
-
-    
 }
 

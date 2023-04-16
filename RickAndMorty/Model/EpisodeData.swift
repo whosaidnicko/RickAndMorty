@@ -7,13 +7,9 @@
 
 import Foundation
 
-
 struct EpisodeData: Decodable {
-    public let results: [Results]
-    
-}
-
-struct Results: Decodable {
     public let name: String
     public let characters: [String]
+    public let id: Int
 }
+

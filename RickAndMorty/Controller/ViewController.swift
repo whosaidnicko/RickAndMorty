@@ -6,14 +6,14 @@
 //
 
 import UIKit
+import SDWebImage
 
 
 
 final class ViewController: UIViewController{
-    var path =  IndexPath()
-    var characters = [DataCharactersLocation]()
-    var episodeName = [String]()
     
+    var path =  IndexPath()
+    var idForEpisode = "1"
     var urls: [Any] = []
     
     private  var headerTitle: UILabel{
@@ -24,73 +24,60 @@ final class ViewController: UIViewController{
         headerTitle.layer.frame = CGRect(x: 25, y: 95, width: 450, height: 37)
         view.addSubview(headerTitle)
         return headerTitle
-        
     }
+    
     
     @IBOutlet weak var tableView: UITableView!
-    
-    private var     result: [Result] = [] {
-        didSet {
-            DispatchQueue.main.async {
-                self.tableView.reloadData()
-            }
-        }
-    }
     private var episodeModel: [EpisodeModel] = []
     private var heroesModel: [HeroesModel] = []
-
     private var networkManager = NetworkManager()
-    
-    
-    
-    
-   
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        getCharacter()
         headerTitle
-
+        // tableView settings
         tableView.rowHeight = 120
-        tableView.estimatedRowHeight = 120
         tableView.backgroundColor = .white
         tableView.dataSource = self
         tableView.delegate = self
         tableView.register(UINib(nibName: "TableViewCell", bundle: nil), forCellReuseIdentifier: "CellHero")
         tableView.reloadData()
-        getPost()
-    
-        
-        
-       
-   
-       
-        
-   
     }
     
-    func getPost() {
-        
-        networkManager.getPost(url: URLs.urlHeroes, completion: {[weak self] result in
+    func getCharacter() {
+        // Random page of characters
+        let maxNumber = 40
+        let randomNumber = String(Int.random(in: 0...maxNumber))
+        // Fetching character
+        networkManager.getCharacter(url: URLs.urlHeroes + randomNumber, completion: {[weak self] result in
             switch result {
+                // Error.
             case .failure(let error):
-                print(error)
+                print(error.localizedDescription)
+                // Succes.
             case .success(let succes):
-                print("Data is succsfull fetched !")
+                // Saving data to heroesModel.
                 self?.heroesModel = succes
+                // After data is received and saved we call next function.
                 self?.getEpisode()
             }
         })
     }
     
     func getEpisode() {
-        networkManager.getEpisode(url: URLs.urlEpisode, completion: {[weak self] result in
+        networkManager.getEpisode(url: URLs.urlEpisode + idForEpisode, completion: {[weak self] result in
             switch result {
+                // Error.
             case .failure(let error):
                 print(error)
+                // Succes.
             case .success(let succes):
-                print("Data is succsfull fetched !")
+                // Receiving data and saving it.
                 self?.episodeModel = succes
+                
+                // Reloading tableView.
                 DispatchQueue.main.async {
                     [weak self] in
                     self?.tableView.reloadData()
@@ -98,128 +85,100 @@ final class ViewController: UIViewController{
             }
         })
     }
-    
 }
-
-
-
-
 //MARK: - UITableView data source
 
 extension ViewController: UITableViewDataSource {
-    
-    
-    
-    
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
-      
+        // returning count of objects received.
         return heroesModel.count
-        
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "CellHero", for: indexPath) as! TableViewCell
-        
+        // Set cell UI.
         cell.backgroundColor = .red
         cell.backMainView.layer.masksToBounds = false
         cell.nameHero.text =  heroesModel[indexPath.row].name
-        
         cell.backgroundColor = .black
-        cell.pictureHero.downloaded(from: heroesModel[indexPath.row].img  , contentMode: .scaleAspectFill)
         cell.labelLocation.text = heroesModel[indexPath.row].nameLocation
-        
         cell.dinamicLabelEpisode.text = heroesModel[0].episode[indexPath.row]
-
-    
-        
-        
-       
-         
-            
-        
-        
-    
-       
-      
-     
-        
-       
-        
+        // Downloading image , cache it , set it.
+        if let  imageUrl = URL(string: heroesModel[indexPath.row].img) {
+            cell.pictureHero.sd_setImage(with: imageUrl, placeholderImage: UIImage(named: "placeholder"))
+        }
         return cell
-        
     }
 }
-
+//MARK: - UITableViewDelegate
 extension ViewController: UITableViewDelegate {
-    
+    //Header height.
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return  55
+        
+        return  0
     }
+    //View for header Section.
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        
         let abstractView = UIView()
-        
-        
         return abstractView
     }
+    // Actions after user selected row.
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-            self.performSegue(withIdentifier: "goToDetailedCharacters", sender: self)
+        // Receiving id of episode at location of cell.
+        self.idForEpisode =  String(self.heroesModel[0].idForEpisode[indexPath.row])
+        // Fetching data of episode with id what we received from cell.
+        getEpisode()
+        // Going to SecondViewController.
+        self.performSegue(withIdentifier: "goToDetailedCharacters", sender: self)
     }
     
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        // Receiving what cell user tapped.
         let path = tableView.indexPathForSelectedRow
-         let index = path?.row
-        
+        let index = path?.row
+        // Set destination as SecondViewController.
         let secondVc = segue.destination as! SecondViewController
-        DispatchQueue.main.async {
-            
+        // Set UI for SecondViewController show to user information about character what he choosed.
+        DispatchQueue.main.async { [weak self] in
             if index != nil {
-                secondVc.topTitle.text =  self.heroesModel[index!].name
-                secondVc.imageCharacter.downloaded(from: self.heroesModel[index!].img, contentMode: .scaleToFill)
-                secondVc.location.text = self.heroesModel[index!].nameLocation
-                secondVc.episodeText.text = self.episodeModel[index!].name
-                secondVc.statusLabel.text = self.heroesModel[index!].status
-                secondVc.episodeModel.text = self.episodeModel[index!].name
-        
+                secondVc.topTitle.text =  self?.heroesModel[index!].name
+                secondVc.location.text = self?.heroesModel[index!].nameLocation
+                secondVc.firstSeenDinamic.text = self?.heroesModel[0].episode[index!]
+                secondVc.statusLabel.text = self?.heroesModel[index!].status
+                secondVc.episodeModel.text = self?.episodeModel[0].name
+                secondVc.alsoLabel.text = ("Also from \"\(self?.episodeModel[0].name ?? "nil")\"")
+                secondVc.alsoLabel.textColor = .black
+                // Downloading image, cache it and set it.
+                if let imageUrl = URL(string: (self?.heroesModel[index!].img)!) {
+                    secondVc.imageCharacter.sd_setImage(
+                        with: imageUrl,
+                        placeholderImage:UIImage(named: "placeholder")
+                    )
+                }
             }
-            
-      
-      
             
         }
-      
-       
-        secondVc.totalNumbersCharacters = self.episodeModel[index!].characters.count
-        secondVc.numberIndex = index!
         
         
-        
-        secondVc.alsoLabel.text = ("Also from \"\(episodeModel[index!].name)\"")
-     
-    
-        for characterURL in episodeModel[index!].characters{
-            
-            
-            guard let url = URL(string: characterURL) else  {print("it doesn't work closure")
-                continue
-            }
+        //MARK: - Decoding each character from list of episode
+        //Going through loop array of json urls
+        for characterURL in episodeModel[0].characters{
+            guard let url = URL(string: characterURL) else  { continue }
             URLSession.shared.dataTask(with: url) { [self] (data, response, error) in
                 if let error = error {
                     print( "\(error.localizedDescription)")
                 }
                 if let data = data {
                     do {
-                        
-                        let jsonCharactersLocation = try JSONDecoder().decode(DataCharactersLocation.self, from: data)
-                        
-                        
-                        characters.append(jsonCharactersLocation)
-                        secondVc.character.append(jsonCharactersLocation)
-                        DispatchQueue.main.async { 
-                            secondVc.tableView.reloadData()
+                        let jsonCharacterEpisode = try JSONDecoder().decode(DataCharactersLocation.self, from: data)
+                        // Appending each character , to reuse it.
+                        secondVc.character.append(jsonCharacterEpisode)
+                        // After we appended all characters, we reload tableView of SecondViewController
+                        if episodeModel[0].characters.count == secondVc.character.count { }
+                        DispatchQueue.main.async {
+                            secondVc.tableView?.reloadData()
                         }
                     }
                     catch {
@@ -229,40 +188,10 @@ extension ViewController: UITableViewDelegate {
             }.resume()
         }
     }
-    
 }
 
-//MARK: -  download Image
 
-extension UIImageView {
-    
-    func downloaded(from url: URL, contentMode mode: ContentMode = .scaleAspectFit) {
-        contentMode = mode
-        URLSession.shared.dataTask(with: url) { data, response, error in
-            guard
-                let httpURLResponse = response as? HTTPURLResponse, httpURLResponse.statusCode == 200,
-                let mimeType = response?.mimeType, mimeType.hasPrefix("image"),
-                let data = data, error == nil,
-                let image = UIImage(data: data)
-            else { return }
-            DispatchQueue.main.async() { [weak self] in
-                self?.image = image
-            }
-        }.resume()
-    }
-    func downloaded(from link: String, contentMode mode: ContentMode = .scaleAspectFit) {
-        guard let url = URL(string: link) else { return }
-        downloaded(from: url, contentMode: mode)
-    }
-    func makeRounded() {
-        let radius = self.bounds.height / 2.0
-        self.layer.cornerRadius = radius
-        self.layer.masksToBounds = true
-        self.clipsToBounds = true
-        
-        self.contentMode = .scaleAspectFill
-    }
-}
+
 
 
 

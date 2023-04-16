@@ -8,8 +8,9 @@
 import Foundation
 
 struct DataCharactersLocation:Decodable {
-    let name: String
-    let image: String
-    let location: Locations
+    public let name: String
+    public let image: String
+    public let location: Locations
+    public let status: String
 }
 

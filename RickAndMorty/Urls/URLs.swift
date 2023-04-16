@@ -8,8 +8,8 @@
 import Foundation
 
 struct URLs {
-     static var urlHeroes = "https://rickandmortyapi.com/api/character?page=\(randomNumber)"
-    static let urlEpisode = "https://rickandmortyapi.com/api/episode"
+     static var urlHeroes = "https://rickandmortyapi.com/api/character?page="
+    static let urlEpisode = "https://rickandmortyapi.com/api/episode/"
 }
-let maxNumber = 40
-let randomNumber = Int.random(in: 0...maxNumber)
+
+

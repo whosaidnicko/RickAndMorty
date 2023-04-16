@@ -7,7 +7,6 @@
 
 import Foundation
 
-
 struct HeroesModel:Decodable {
     public let name: String
     public let img: String
@@ -15,5 +14,5 @@ struct HeroesModel:Decodable {
     public let status: String
     public let id: Int
     public let episode: [String]
-
+    public let idForEpisode: [Int]
 }
