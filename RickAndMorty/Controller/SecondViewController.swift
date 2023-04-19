@@ -14,7 +14,7 @@ final class SecondViewController: UIViewController {
     //Adding UI
     public let backButton = UIButton(type: .system)
     public let episodeModel = UILabel()
-    public let imageCharacter = UIImageView()
+    public var imageCharacter = UIImageView()
     private let textLastKnown = UILabel()
     public let location = UILabel()
     private let firstSeen = UILabel()
@@ -40,11 +40,11 @@ final class SecondViewController: UIViewController {
         tableView.register(UINib(nibName: "SecondCell", bundle: nil), forCellReuseIdentifier: "SecondCell")
         tableView.rowHeight = 150
 
-        tableView.reloadData()
+//        tableView.reloadData()
     }
     // Actions after backButton pressed.
     @objc func backButtonPressed() {
-        navigationController?.popViewController(animated: true)
+        navigationController?.popToRootViewController(animated: true)
     }
     //MARK: -  Setting UI
     func settingAllUI()  {
@@ -98,18 +98,18 @@ final class SecondViewController: UIViewController {
         statusLabel.layer.frame = CGRect(x: 193, y: 230, width: 100, height: 50)
         statusLabel.textColor = .systemGray
         statusLabel.font = .boldSystemFont(ofSize: 13)
-        DispatchQueue.main.async { [weak self] in
+  
             // logic of setting image if text of status changes
-            if self?.statusLabel.text == "Dead" {
-                self!.statusImage.layer.borderColor = UIColor.red.cgColor
+            if statusLabel.text == "Dead" {
+             statusImage.layer.borderColor = UIColor.red.cgColor
             }
-            else if self?.statusLabel.text == "Alive" {
-                self!.statusImage.layer.borderColor = UIColor.systemGreen.cgColor
+            else if self.statusLabel.text == "Alive" {
+             statusImage.layer.borderColor = UIColor.systemGreen.cgColor
             }
             else {
-                self!.statusImage.layer.borderColor = UIColor.purple.cgColor
+                 statusImage.layer.borderColor = UIColor.purple.cgColor
             }
-        }
+        
         view.addSubview(statusLabel)
     }
     
@@ -208,8 +208,9 @@ extension SecondViewController: UITableViewDataSource {
 //MARK: - UITableViewDelegate
 extension SecondViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+
         // Action after user tapped cell
-        DispatchQueue.main.async {
+    
             // Setting UI
             self.topTitle.text = self.character[indexPath.row].name
             self.location.text = self.character[indexPath.row].location.name
@@ -228,39 +229,23 @@ extension SecondViewController: UITableViewDelegate {
             else {
                 self.statusImage.layer.borderColor = UIColor.purple.cgColor
             }
-        }
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let myNewViewController = storyboard.instantiateViewController(identifier: "SecondViewController") as? SecondViewController
+        myNewViewController?.topTitle.text = topTitle.text
+        myNewViewController?.location.text = location.text
+        myNewViewController?.firstSeenDinamic.text = firstSeenDinamic.text
+        myNewViewController?.statusLabel.text = statusLabel.text
+        myNewViewController?.episodeModel.text = episodeModel.text
+        myNewViewController?.alsoLabel.text = alsoLabel.text
+        myNewViewController?.alsoLabel.text = alsoLabel.text
+        myNewViewController?.alsoLabel.textColor = .black
+        myNewViewController?.imageCharacter = imageCharacter
+        myNewViewController?.character = character
+        
+        self.navigationController?.pushViewController(myNewViewController ?? .init(nibName: nil, bundle: nil), animated: true)
+        
     }
-    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
-    }
+
+
 }
-extension UITableView {
-
-    func scrollToBottom(isAnimated:Bool = true){
-
-        DispatchQueue.main.async {
-            let indexPath = IndexPath(
-                row: self.numberOfRows(inSection:  self.numberOfSections-1) - 1,
-                section: self.numberOfSections - 1)
-            if self.hasRowAtIndexPath(indexPath: indexPath) {
-                self.scrollToRow(at: indexPath, at: .bottom, animated: isAnimated)
-            }
-        }
-    }
-
-    func scrollToTop(isAnimated:Bool = true) {
-
-        DispatchQueue.main.async {
-            let indexPath = IndexPath(row: 0, section: 0)
-            if self.hasRowAtIndexPath(indexPath: indexPath) {
-                self.scrollToRow(at: indexPath, at: .top, animated: isAnimated)
-           }
-        }
-    }
-
-    func hasRowAtIndexPath(indexPath: IndexPath) -> Bool {
-        return indexPath.section < self.numberOfSections && indexPath.row < self.numberOfRows(inSection: indexPath.section)
-    }
-}
-
 
