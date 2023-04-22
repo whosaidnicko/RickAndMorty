@@ -7,6 +7,7 @@
 
 import UIKit
 import SDWebImage
+import SnapKit
 
 
 
@@ -17,15 +18,14 @@ final class ViewController: UIViewController{
     var idForEpisode = "1"
     var urls: [Any] = []
     
-    private  var headerTitle: UILabel{
+    private lazy var headerTitle: UILabel = {
         let headerTitle = UILabel()
         headerTitle.text = "Rick and Morty"
         headerTitle.textColor = .black
         headerTitle.font = UIFont(name: "HelveticaNeue-CondensedBlack", size: 35)
         headerTitle.layer.frame = CGRect(x: 25, y: 95, width: 450, height: 37)
-        view.addSubview(headerTitle)
         return headerTitle
-    }
+    }()
     
     
     @IBOutlet weak var tableView: UITableView!
@@ -36,9 +36,9 @@ final class ViewController: UIViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
+        view.addSubview(headerTitle)
+        setupTableView()
         getCharacter()
-        headerTitle
         // TableView settings
         tableView.rowHeight = 120
         tableView.backgroundColor = .white
@@ -50,6 +50,16 @@ final class ViewController: UIViewController{
         navigationController?.navigationBar.isHidden = true
         
     }
+    private func setupTableView() {
+        // TableView
+       
+        tableView.snp.makeConstraints { make in
+            make.leading.trailing.equalToSuperview()
+            make.top.equalTo(headerTitle.snp.bottom).offset(5)
+            make.bottom.equalToSuperview().offset(-10)
+        }
+    }
+
     
     func getCharacter() {
         // Random page of characters
