@@ -33,8 +33,8 @@ final class SecondViewController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
   
-        tableView.register(UINib(nibName: "SecondCell", bundle: nil), forCellReuseIdentifier: "SecondCell")
-        tableView.rowHeight = 150
+        tableView.register(UINib(nibName: "TableViewCell", bundle: nil), forCellReuseIdentifier: "CellHero")
+        tableView.rowHeight = 120
         view.backgroundColor = .white
         navigationController?.navigationBar.isHidden = true
   
@@ -331,7 +331,7 @@ extension SecondViewController: UITableViewDataSource {
 
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "SecondCell", for: indexPath) as! SecondCell
+        guard  let cell = tableView.dequeueReusableCell(withIdentifier: "CellHero", for: indexPath) as? TableViewCell else { return .init(frame: .zero) }
         //Setting UI for cell
         cell.nameHero.text = character[indexPath.row].name
         cell.labelLocation.text = character[indexPath.row].location.name

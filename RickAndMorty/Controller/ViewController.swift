@@ -170,7 +170,7 @@ extension ViewController: UITableViewDelegate {
         else {
             statusImageBorderColor = UIColor.purple
         }
-        var model: CharactersInfoModel = .init(
+        let model: CharactersInfoModel = .init(
             topTitle: heroesModel.name,
             location: heroesModel.nameLocation,
             firstSeenDinamic: self.heroesModel[0].episode[index],
