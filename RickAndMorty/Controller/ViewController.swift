@@ -76,12 +76,12 @@ final class ViewController: UIViewController{
                 // Saving data to heroesModel.
                 self?.heroesModel = succes
                 // After data is received and saved we call next function.
-                self?.getEpisode()
+                self?.getEpisode(isRunSegue: false)
             }
         })
     }
     
-    func getEpisode() {
+    func getEpisode(isRunSegue: Bool) {
         networkManager.getEpisode(url: URLs.urlEpisode + "\(idForEpisode)", completion: {[weak self] result in
             switch result {
                 // Error.
@@ -95,7 +95,11 @@ final class ViewController: UIViewController{
                 // Reloading tableView.
                 DispatchQueue.main.async {
                     [weak self] in
-                    self?.tableView.reloadData()
+                    if isRunSegue {
+                        self?.performSegue(withIdentifier: "goToDetailedCharacters", sender: self)
+                    } else {
+                        self?.tableView.reloadData()
+                    }
                 }
             }
         })
@@ -143,9 +147,9 @@ extension ViewController: UITableViewDelegate {
         // Receiving id of episode at location of cell.
         self.idForEpisode =  String(self.heroesModel[0].idForEpisode[indexPath.row])
         // Fetching data of episode with id what we received from cell.
-        getEpisode()
+        getEpisode(isRunSegue: true)
         // Going to SecondViewController.
-        self.performSegue(withIdentifier: "goToDetailedCharacters", sender: self)
+       
     }
     
     
@@ -179,6 +183,7 @@ extension ViewController: UITableViewDelegate {
             statusLabel: heroesModel.status,
             statusImageBorderColor: statusImageBorderColor,
             imageCharacterURL: URL(string: (heroesModel.img)))
+        
         
         secondVc.setupData(model: model)
         //MARK: - Decoding each character from list of episode
