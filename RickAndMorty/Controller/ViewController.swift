@@ -11,7 +11,8 @@ import SDWebImage
 
 
 final class ViewController: UIViewController{
-    
+
+  
     var path =  IndexPath()
     var idForEpisode = "1"
     var urls: [Any] = []
@@ -145,32 +146,36 @@ extension ViewController: UITableViewDelegate {
         // Set destination as SecondViewController.
         let secondVc = segue.destination as! SecondViewController
         // Set UI for SecondViewController show to user information about character what he choosed.
-        DispatchQueue.main.async { [weak self] in
-            if index != nil {
-                secondVc.topTitle.text =  self?.heroesModel[index!].name
-                secondVc.location.text = self?.heroesModel[index!].nameLocation
-                secondVc.firstSeenDinamic.text = self?.heroesModel[0].episode[index!]
-                secondVc.statusLabel.text = self?.heroesModel[index!].status
-                secondVc.episodeModel.text = self?.episodeModel[0].name
-                secondVc.alsoLabel.text = ("Also from \"\(self?.episodeModel[0].name ?? "nil")\"")
-                secondVc.alsoLabel.textColor = .black
-                // Downloading image, cache it and set it.
-                if let imageUrl = URL(string: (self?.heroesModel[index!].img)!) {
-                    secondVc.imageCharacter.sd_setImage(
-                        with: imageUrl,
-                        placeholderImage:UIImage(named: "placeholder")
-                    )
-                }
-            }
-            
+        guard let index = index else { return }
+        let heroesModel = self.heroesModel[index]
+        let alsoText = ("Also from \"\(self.episodeModel[0].name)\"")
+        let statusImageBorderColor: UIColor
+        // logic of setting image if text of status changes
+        if heroesModel.status == "Dead" {
+            statusImageBorderColor = UIColor.red
         }
+        else if heroesModel.status == "Alive" {
+            statusImageBorderColor = UIColor.systemGreen
+        }
+        else {
+            statusImageBorderColor = UIColor.purple
+        }
+        var model: CharactersInfoModel = .init(
+            topTitle: heroesModel.name,
+            location: heroesModel.nameLocation,
+            firstSeenDinamic: self.heroesModel[0].episode[index],
+            episodeModel: self.episodeModel[0].name,
+            alsoLabel: alsoText,
+            statusLabel: heroesModel.status,
+            statusImageBorderColor: statusImageBorderColor,
+            imageCharacterURL: URL(string: (heroesModel.img)))
         
-        
+        secondVc.setupData(model: model)
         //MARK: - Decoding each character from list of episode
         //Going through loop array of json urls
         for characterURL in episodeModel[0].characters{
             guard let url = URL(string: characterURL) else  { continue }
-            URLSession.shared.dataTask(with: url) { [self] (data, response, error) in
+            URLSession.shared.dataTask(with: url) { (data, response, error) in
                 if let error = error {
                     print( "\(error.localizedDescription)")
                 }
@@ -180,7 +185,7 @@ extension ViewController: UITableViewDelegate {
                         // Appending each character , to reuse it.
                         secondVc.character.append(jsonCharacterEpisode)
                         // After we appended all characters, we reload tableView of SecondViewController
-                        if episodeModel[0].characters.count == secondVc.character.count { }
+                        
                         DispatchQueue.main.async {
                             secondVc.tableView?.reloadData()
                         }
@@ -192,6 +197,7 @@ extension ViewController: UITableViewDelegate {
             }.resume()
         }
     }
+    
 }
 
 
