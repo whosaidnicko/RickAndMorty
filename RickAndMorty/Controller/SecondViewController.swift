@@ -165,7 +165,7 @@ final class SecondViewController: UIViewController {
         textLastKnown.snp.makeConstraints { make in
             make.top.equalTo(imageCharacter.snp.top).offset(0)
             make.leading.equalTo(imageCharacter.snp.trailing).offset(7)
-            make.trailing.equalTo(imageCharacter).offset(200)
+            make.trailing.equalToSuperview().offset(-25)
             make.height.equalTo(height)
         }
     
@@ -224,10 +224,10 @@ final class SecondViewController: UIViewController {
  
         firstSeenDinamic.text = characterModel.firstSeenDinamic
         firstSeenDinamic.translatesAutoresizingMaskIntoConstraints = false
-        let width = UIScreen.main.bounds.width - 150
-        let height = ceil((characterModel.firstSeenDinamic.height(
+        let width = UIScreen.main.bounds.width - 197
+        let height = ceil(characterModel.firstSeenDinamic.height(
             withConstrainedWidth: width,
-            font: UIFont(name: "boldSystemFont", size: 13) ?? .systemFont(ofSize: 13))))
+            font: .boldSystemFont(ofSize: 13)))
         firstSeenDinamic.snp.makeConstraints { make in
             make.top.equalTo(firstSeen.snp.bottom).offset(3)
             make.leading.equalTo(firstSeen)
