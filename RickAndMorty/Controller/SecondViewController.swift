@@ -77,23 +77,31 @@ final class SecondViewController: UIViewController {
     }
     
     func createButton() {
-        backButton.setImage(UIImage(systemName:"arrowshape.left.fill"), for: .normal)
-        backButton.tintColor = .black
-        backButton.setTitle("Back", for: .normal)
+        let textBack = "Back"
+//        backButton.setImage(UIImage(systemName:"arrow.left"), for: .normal)
+//        backButton.setTitle(textBack, for: .normal)
         backButton.addTarget(self, action: #selector(backButtonPressed), for: .touchUpInside)
         // Add the button to the view
         view.addSubview(backButton)
         let width = UIScreen.main.bounds.width - 50
-        let height = ceil((backButton.titleLabel!.text!.height(
+        let height = ceil((textBack.height(
             withConstrainedWidth: width,
             font: UIFont(name: "HelveticaNeue-CondensedBlack", size: 19) ?? .systemFont(ofSize: 19))))
+        
+        var filledConfiguration = UIButton.Configuration.filled()
+        filledConfiguration.title = textBack
+        filledConfiguration.image = UIImage(systemName:"arrow.left")
+        filledConfiguration.imagePadding = 10
+        filledConfiguration.baseBackgroundColor = .white
+        filledConfiguration.baseForegroundColor = .black
+        filledConfiguration.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0)
+        // Depending on iPhone , will be button located.
+        backButton.configuration = filledConfiguration
         backButton.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide)
             make.height.equalTo(height)
             make.leading.equalToSuperview().offset(25)
         }
-        // Depending on iPhone , will be button located.
-       
      
     }
     
@@ -114,7 +122,7 @@ final class SecondViewController: UIViewController {
             font: UIFont(name: "HelveticaNeue-CondensedBlack", size: 30) ?? .systemFont(ofSize: 30)))
         view.addSubview(topTitle)
         topTitle.snp.makeConstraints { make in
-            make.top.equalTo(backButton.snp.bottom)
+            make.top.equalTo(backButton.snp.bottom).offset(13)
             make.leading.equalToSuperview().offset(25)
             make.trailing.equalToSuperview().offset(-25)
             make.height.equalTo(height)
