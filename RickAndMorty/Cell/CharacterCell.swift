@@ -11,7 +11,6 @@ import SnapKit
 //MARK: -  SETTING UI
 
 class CharacterCell: UITableViewCell{
-    var heroesModel: [HeroesModel] = []
     lazy var nameHero = UILabel()
     lazy var  pictureHero = UIImageView()
     lazy var entireView = UIView()
@@ -40,12 +39,6 @@ class CharacterCell: UITableViewCell{
     
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-    }
-    
-    func setupData(model: CharactersInfoModel) {
-        // Saving character object
-        self.characterModel = model
-        setAllUI()
     }
     
     func setAllUI() {
@@ -120,16 +113,11 @@ class CharacterCell: UITableViewCell{
         labelLocation.numberOfLines = 0
         labelLocation.lineBreakMode = .byWordWrapping
         labelLocation.preferredMaxLayoutWidth = 310
-        let width = UIScreen.main.bounds.width - 230
-        let height = ceil(labelLocation.text?.height(
-            withConstrainedWidth: width,
-            font:.boldSystemFont(ofSize: 12)) ?? 12)
         labelLocation.snp.makeConstraints { make in
             make.top.equalTo(nameHero.snp.bottom).offset(-2)
             make.leading.equalTo(nameHero.snp.leading)
             make.trailing.equalTo(-60)
             make.height.equalTo(24)
-        
         }
     }
     
