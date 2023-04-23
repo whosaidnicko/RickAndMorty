@@ -10,7 +10,7 @@ import UIKit
 struct NetworkManager {
     
     //MARK: -  Logic of fetching
-     func getCharacter(url: String, completion: @escaping(Swift.Result<[HeroesModel], Error> ) -> Void) {
+    func getCharacter(url: String, completion: @escaping(Swift.Result<[HeroesModel], Error> ) -> Void) {
         // Creating variable to append objects in.
         var episodeModel = [EpisodeModel]()
         guard let url = URL(string: url) else { return }
@@ -44,9 +44,7 @@ struct NetworkManager {
                                     //Decoding json.
                                     let json = try JSONDecoder().decode(EpisodeModel.self, from: data)
                                     // Appending to episodeModel characters which were in episode.
-                                    
-                                        episodeModel.append(json)
-                                    
+                                    episodeModel.append(json)
                                 }
                                 // Error.
                                 catch {
@@ -55,7 +53,6 @@ struct NetworkManager {
                             }
                             group.leave() }
                         .resume()
-                        
                     }
                     group.notify(queue: .main) {
                         // Saving name/id.
@@ -98,7 +95,6 @@ struct NetworkManager {
                 }
                 // Error/
                 catch {
-                    
                     completion(.failure(error))
                 }
             }

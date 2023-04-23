@@ -23,128 +23,17 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "41B2E5C6-BFF8-41C7-B9D2-74759091EFA8"
+            uuid = "12AF4267-325C-443F-9EED-206988C5E51C"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "RickAndMorty/Controller/ViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "177"
-            endingLineNumber = "177"
-            landmarkName = "prepare(for:sender:)"
+            startingLineNumber = "73"
+            endingLineNumber = "73"
+            landmarkName = "getCharacter()"
             landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "F9B3F212-6C5E-4BA1-B9AA-F7C366177163"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "RickAndMorty/Controller/ViewController.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "93"
-            endingLineNumber = "93"
-            landmarkName = "getEpisode()"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "F9B3F212-6C5E-4BA1-B9AA-F7C366177163 - bb1f45b6df3da542"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (Swift.Result&lt;Swift.Array&lt;RickAndMorty.EpisodeModel&gt;, Swift.Error&gt;) -&gt; () in RickAndMorty.ViewController.getEpisode() -&gt; ()"
-                  moduleName = "RickAndMorty"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/nicolaechivriga/Desktop/RickAndMorty/RickAndMorty/Controller/ViewController.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "93"
-                  endingLineNumber = "93"
-                  offsetFromSymbolStart = "660">
-               </Location>
-               <Location
-                  uuid = "F9B3F212-6C5E-4BA1-B9AA-F7C366177163 - bb1f45b6df3da542"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (Swift.Result&lt;Swift.Array&lt;RickAndMorty.EpisodeModel&gt;, Swift.Error&gt;) -&gt; () in RickAndMorty.ViewController.getEpisode() -&gt; ()"
-                  moduleName = "RickAndMorty"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/nicolaechivriga/Desktop/RickAndMorty/RickAndMorty/Controller/ViewController.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "93"
-                  endingLineNumber = "93"
-                  offsetFromSymbolStart = "508">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "C2DD0A23-8961-4C07-930A-94AE3AD625AE"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "RickAndMorty/Controller/ViewController.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "85"
-            endingLineNumber = "85"
-            landmarkName = "getEpisode()"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "C2DD0A23-8961-4C07-930A-94AE3AD625AE - 4d122bb4195b3500"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "RickAndMorty.ViewController.getEpisode() -&gt; ()"
-                  moduleName = "RickAndMorty"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/nicolaechivriga/Desktop/RickAndMorty/RickAndMorty/Controller/ViewController.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "85"
-                  endingLineNumber = "85"
-                  offsetFromSymbolStart = "48">
-               </Location>
-               <Location
-                  uuid = "C2DD0A23-8961-4C07-930A-94AE3AD625AE - bb1f45b6df3da64a"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (Swift.Result&lt;Swift.Array&lt;RickAndMorty.EpisodeModel&gt;, Swift.Error&gt;) -&gt; () in RickAndMorty.ViewController.getEpisode() -&gt; ()"
-                  moduleName = "RickAndMorty"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/nicolaechivriga/Desktop/RickAndMorty/RickAndMorty/Controller/ViewController.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "85"
-                  endingLineNumber = "85"
-                  offsetFromSymbolStart = "248">
-               </Location>
-               <Location
-                  uuid = "C2DD0A23-8961-4C07-930A-94AE3AD625AE - bb1f45b6df3da64a"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (Swift.Result&lt;Swift.Array&lt;RickAndMorty.EpisodeModel&gt;, Swift.Error&gt;) -&gt; () in RickAndMorty.ViewController.getEpisode() -&gt; ()"
-                  moduleName = "RickAndMorty"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/nicolaechivriga/Desktop/RickAndMorty/RickAndMorty/Controller/ViewController.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "85"
-                  endingLineNumber = "85"
-                  offsetFromSymbolStart = "216">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

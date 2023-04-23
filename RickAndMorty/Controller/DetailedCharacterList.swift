@@ -7,8 +7,9 @@
 
 import UIKit
 import SnapKit
+import SDWebImage
 
-final class SecondViewController: UIViewController {
+final class DetailedCharacterList: UIViewController {
     var characterModel: CharactersInfoModel = .template
     let screenSize = UIScreen.main.bounds.size
     public var character = [DataCharactersLocation]()
@@ -21,7 +22,7 @@ final class SecondViewController: UIViewController {
     private let firstSeen = UILabel()
     public  let  firstSeenDinamic = UILabel()
     private let statusText = UILabel()
-     var statusImage = UIView()
+    var statusImage = UIView()
     public let   statusLabel = UILabel()
     public let alsoLabel = UILabel()
     public let topTitle = UILabel()
@@ -32,12 +33,11 @@ final class SecondViewController: UIViewController {
         //all UI set to the ViewController
         tableView.delegate = self
         tableView.dataSource = self
-  
-        tableView.register(UINib(nibName: "TableViewCell", bundle: nil), forCellReuseIdentifier: "CellHero")
+        tableView.register(UINib(nibName: "CharacterCell", bundle: nil), forCellReuseIdentifier: "CharacterCell")
         tableView.rowHeight = 120
         view.backgroundColor = .white
         navigationController?.navigationBar.isHidden = true
-  
+        
     }
     // Actions after backButton pressed.
     @objc func backButtonPressed() {
@@ -45,14 +45,12 @@ final class SecondViewController: UIViewController {
     }
     
     func setupData(model: CharactersInfoModel) {
+        // Saving character object
         self.characterModel = model
         settingAllUI()
     }
-    
-    
     //MARK: -  Setting UI
     func settingAllUI() {
-       
         createButton()
         setTopTitle()
         setImageCharacter()
@@ -68,8 +66,7 @@ final class SecondViewController: UIViewController {
     }
     
     private func setupTableView() {
-        // TableView
-       
+        // TableView constraints
         tableView.snp.makeConstraints { make in
             make.bottom.leading.trailing.equalToSuperview()
             make.top.equalTo(alsoLabel.snp.bottom).offset(10)
@@ -78,8 +75,6 @@ final class SecondViewController: UIViewController {
     
     func createButton() {
         let textBack = "Back"
-//        backButton.setImage(UIImage(systemName:"arrow.left"), for: .normal)
-//        backButton.setTitle(textBack, for: .normal)
         backButton.addTarget(self, action: #selector(backButtonPressed), for: .touchUpInside)
         // Add the button to the view
         view.addSubview(backButton)
@@ -87,7 +82,7 @@ final class SecondViewController: UIViewController {
         let height = ceil((textBack.height(
             withConstrainedWidth: width,
             font: UIFont(name: "HelveticaNeue-CondensedBlack", size: 19) ?? .systemFont(ofSize: 19))))
-        
+        // Constraints for button
         var filledConfiguration = UIButton.Configuration.filled()
         filledConfiguration.title = textBack
         filledConfiguration.image = UIImage(systemName:"arrow.left")
@@ -95,31 +90,24 @@ final class SecondViewController: UIViewController {
         filledConfiguration.baseBackgroundColor = .white
         filledConfiguration.baseForegroundColor = .black
         filledConfiguration.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0)
-        // Depending on iPhone , will be button located.
         backButton.configuration = filledConfiguration
         backButton.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide)
+            make.top.equalTo(view.safeAreaLayoutGuide).offset(10)
             make.height.equalTo(height)
             make.leading.equalToSuperview().offset(25)
         }
-     
     }
     
     func setTopTitle() {
         topTitle.textColor = .black
-//        topTitle.layer.frame = CGRect(x: 25, y: 50, width: 340, height: 100)
-       // topTitle.snp.makeConstraints { make in
-           // make.top.eq
-//        }
-        topTitle.font = UIFont(name: "HelveticaNeue-CondensedBlack", size: 30)
+        topTitle.font = UIFont(name: "HelveticaNeue-CondensedBlack", size: 35)
         topTitle.numberOfLines = 0
         topTitle.lineBreakMode = .byWordWrapping
         topTitle.text = characterModel.topTitle
-        topTitle.translatesAutoresizingMaskIntoConstraints = false
         let width = UIScreen.main.bounds.width - 50
         let height = ceil(characterModel.topTitle.height(
             withConstrainedWidth: width,
-            font: UIFont(name: "HelveticaNeue-CondensedBlack", size: 30) ?? .systemFont(ofSize: 30)))
+            font: UIFont(name: "HelveticaNeue-CondensedBlack", size: 35) ?? .systemFont(ofSize: 35)))
         view.addSubview(topTitle)
         topTitle.snp.makeConstraints { make in
             make.top.equalTo(backButton.snp.bottom).offset(13)
@@ -129,101 +117,87 @@ final class SecondViewController: UIViewController {
         }
     }
     func setImageCharacter() {
-        //imageCharacter.layer.frame = CGRect(x: 25, y: 130, width: 150, height: 150)
         view.addSubview(imageCharacter)
-        imageCharacter.layer.masksToBounds = true
-        imageCharacter.layer.cornerRadius = 10
-        imageCharacter.translatesAutoresizingMaskIntoConstraints = false
         imageCharacter.snp.makeConstraints { make in
             make.top.equalTo(topTitle.snp.bottom).offset(30)
             make.leading.equalToSuperview().offset(25)
             make.width.equalTo(140)
             make.height.equalTo(140)
         }
+        // Making rounded
+        imageCharacter.layer.masksToBounds = true
+        imageCharacter.layer.cornerRadius = 10
         // Downloading image, cache it and set it.
         if let imageUrl = characterModel.imageCharacterURL {
             imageCharacter.sd_setImage(
                 with: imageUrl,
                 placeholderImage:UIImage(named: "placeholder")
             )
-            
         }
-     
     }
+    
     func setTextLastKnown() {
         view.addSubview(textLastKnown)
         textLastKnown.font = UIFont(name: "HelveticaNeue-CondensedBlack", size: 19)
         textLastKnown.text = "Last known location:"
         textLastKnown.textColor =  #colorLiteral(red: 1, green: 0.6838926673, blue: 0, alpha: 1)
-        textLastKnown.translatesAutoresizingMaskIntoConstraints = false
         let width = UIScreen.main.bounds.width - 50
         let height = ceil((textLastKnown.text!.height(
             withConstrainedWidth: width,
             font: UIFont(name: "HelveticaNeue-CondensedBlack", size: 19) ?? .systemFont(ofSize: 19))))
-
-        
         textLastKnown.snp.makeConstraints { make in
-            make.top.equalTo(imageCharacter.snp.top).offset(0)
+            make.top.equalTo(imageCharacter.snp.top).offset(-3)
             make.leading.equalTo(imageCharacter.snp.trailing).offset(7)
             make.trailing.equalToSuperview().offset(-25)
             make.height.equalTo(height)
         }
-    
     }
+    
     func setLabelLocation() {
         view.addSubview(location)
-        //location.layer.frame = CGRect(x: 180, y: 144, width: 190, height: 30)
-
         location.textColor = .systemGray
         location.font =  .boldSystemFont(ofSize: 12)
         location.numberOfLines = 0
         location.lineBreakMode = .byWordWrapping
         location.preferredMaxLayoutWidth = 200
         location.text = characterModel.location
-            location.translatesAutoresizingMaskIntoConstraints = false
-        let width = UIScreen.main.bounds.width - 50
+        let width = UIScreen.main.bounds.width - 197
         let height = ceil((characterModel.location.height(
             withConstrainedWidth: width,
             font: UIFont(name: "boldSystemFont", size: 12) ?? .systemFont(ofSize: 12))))
-
         location.snp.makeConstraints { make in
             make.top.equalTo(textLastKnown.snp.bottom).offset(1)
             make.leading.equalTo(textLastKnown)
             make.trailing.equalTo(textLastKnown)
             make.height.equalTo(height)
         }
-    
     }
+    
     func setLabelFirstSeen() {
         view.addSubview(firstSeen)
         firstSeen.layer.frame = CGRect(x: 180, y: 169, width: 200, height: 30)
         firstSeen.text = "First seen in:"
         firstSeen.textColor =  #colorLiteral(red: 1, green: 0.6838926673, blue: 0, alpha: 1)
         firstSeen.font = UIFont(name: "HelveticaNeue-CondensedBlack", size: 19)
-        firstSeen.translatesAutoresizingMaskIntoConstraints = false
         let width = UIScreen.main.bounds.width - 50
         let height = ceil((firstSeen.text!.height(
             withConstrainedWidth: width,
             font: UIFont(name: "boldSystemFont", size: 12) ?? .systemFont(ofSize: 12))))
-        
-        
         firstSeen.snp.makeConstraints { make in
             make.top.equalTo(location.snp.bottom).offset(10)
             make.leading.equalTo(location)
             make.trailing.equalTo(location)
             make.height.equalTo(height)
         }
-   
     }
+    
     func setFirstSeenDinamic() {
         view.addSubview(firstSeenDinamic)
         firstSeenDinamic.textColor = .systemGray
         firstSeenDinamic.font =  .boldSystemFont(ofSize: 13)
         firstSeenDinamic.numberOfLines = 0
         firstSeenDinamic.lineBreakMode = .byWordWrapping
- 
         firstSeenDinamic.text = characterModel.firstSeenDinamic
-        firstSeenDinamic.translatesAutoresizingMaskIntoConstraints = false
         let width = UIScreen.main.bounds.width - 197
         let height = ceil(characterModel.firstSeenDinamic.height(
             withConstrainedWidth: width,
@@ -234,16 +208,14 @@ final class SecondViewController: UIViewController {
             make.trailing.equalTo(firstSeen)
             make.height.equalTo(height)
         }
-        
-       
     }
+    
     func labelStatus() {
         view.addSubview(statusText)
         //statusText.layer.frame = CGRect(x: 180, y: 220, width: 200, height: 30)
         statusText.text = "Status:"
         statusText.textColor =  #colorLiteral(red: 1, green: 0.6838926673, blue: 0, alpha: 1)
         statusText.font = UIFont(name: "HelveticaNeue-CondensedBlack", size: 19)
-        statusText.translatesAutoresizingMaskIntoConstraints = false
         let width = UIScreen.main.bounds.width - 50
         let height = ceil((statusText.text!.height(
             withConstrainedWidth: width,
@@ -254,30 +226,23 @@ final class SecondViewController: UIViewController {
             make.trailing.equalTo(firstSeenDinamic)
             make.height.equalTo(height)
         }
-        
-       
     }
+    
     func setStatusImg() {
         view.addSubview(statusImage)
-        //statusImage.layer.frame = CGRect(x: 180, y: 250, width: 10, height: 10)
-    
         // Making circle
-     
- 
         statusImage.backgroundColor = characterModel.statusImageBorderColor
-       
-        statusImage.translatesAutoresizingMaskIntoConstraints = false
         statusImage.snp.makeConstraints { make in
             make.top.equalTo(statusText.snp.bottom).offset(4)
             make.leading.equalTo(statusText.snp.leading)
             make.width.equalTo(8)
             make.height.equalTo(8)
-            
         }
+        // Making circle
         statusImage.layer.cornerRadius = 4
-         statusImage.clipsToBounds = true
-       
+        statusImage.clipsToBounds = true
     }
+    
     func setStatusDinamic() {
         view.addSubview(statusLabel)
         statusLabel.textColor = .systemGray
@@ -287,18 +252,13 @@ final class SecondViewController: UIViewController {
         let height = ceil((characterModel.firstSeenDinamic.height(
             withConstrainedWidth: width,
             font: UIFont(name: "boldSystemFont", size: 13) ?? .systemFont(ofSize: 13))))
-        statusLabel.translatesAutoresizingMaskIntoConstraints = false
         statusLabel.snp.makeConstraints { make in
             make.top.equalTo(statusImage.snp.top).offset(-3)
             make.leading.equalTo(statusImage).offset(13)
             make.trailing.equalTo(firstSeenDinamic)
             make.height.equalTo(height)
-            
-            
         }
-      
     }
-
     
     func setAlsoLabel(){
         view.addSubview(alsoLabel)
@@ -308,7 +268,6 @@ final class SecondViewController: UIViewController {
         alsoLabel.preferredMaxLayoutWidth = 160
         alsoLabel.textColor = .black
         alsoLabel.text = characterModel.alsoLabel
-        alsoLabel.translatesAutoresizingMaskIntoConstraints = false
         let width = UIScreen.main.bounds.width - 50
         let height = ceil((characterModel.alsoLabel.height(
             withConstrainedWidth: width,
@@ -319,27 +278,25 @@ final class SecondViewController: UIViewController {
             make.trailing.equalToSuperview().offset(-25)
             make.height.equalTo(height)
         }
- 
     }
 }
 //MARK: - UITableViewDataSource
-extension SecondViewController: UITableViewDataSource {
+extension DetailedCharacterList: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         //returning number rows
         return character.count
     }
     func numberOfSections(in tableView: UITableView) -> Int {
+        //returning number sections
         1
     }
-   
-   
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        // Setting height for section
         return 1
     }
-
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard  let cell = tableView.dequeueReusableCell(withIdentifier: "CellHero", for: indexPath) as? TableViewCell else { return .init(frame: .zero) }
+        guard  let cell = tableView.dequeueReusableCell(withIdentifier: "CharacterCell", for: indexPath) as? CharacterCell else { return .init(frame: .zero) }
         //Setting UI for cell
         cell.nameHero.text = character[indexPath.row].name
         cell.labelLocation.text = character[indexPath.row].location.name
@@ -354,22 +311,22 @@ extension SecondViewController: UITableViewDataSource {
     }
 }
 //MARK: - UITableViewDelegate
-extension SecondViewController: UITableViewDelegate {
+extension DetailedCharacterList: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         // Action after user tapped cell
         let characterModel = self.character[indexPath.row]
         let statusImageBorderColor: UIColor
         // Logic of statusImage
         if characterModel.status == "Dead" {
-                statusImageBorderColor = UIColor.red
-            }
-            else if characterModel.status == "Alive" {
-                statusImageBorderColor = UIColor.systemGreen
-            }
-            else {
-                statusImageBorderColor = UIColor.purple
-            }
-         //  init model  for new ViewController
+            statusImageBorderColor = UIColor.red
+        }
+        else if characterModel.status == "Alive" {
+            statusImageBorderColor = UIColor.systemGreen
+        }
+        else {
+            statusImageBorderColor = UIColor.purple
+        }
+        //  init model  for new ViewController
         let model: CharactersInfoModel = .init(
             topTitle: characterModel.name,
             location: characterModel.location.name,
@@ -379,10 +336,10 @@ extension SecondViewController: UITableViewDelegate {
             statusLabel: characterModel.status,
             statusImageBorderColor: statusImageBorderColor,
             imageCharacterURL: URL(string: characterModel.image))
-   // Get needed story board.
+        // Get needed story board.
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         // Created new ViewController
-        let myNewViewController = storyboard.instantiateViewController(identifier: "SecondViewController") as? SecondViewController
+        let myNewViewController = storyboard.instantiateViewController(identifier: "SecondViewController") as? DetailedCharacterList
         // We saved data in new ViewController
         myNewViewController?.setupData(model: model)
         myNewViewController?.character = character

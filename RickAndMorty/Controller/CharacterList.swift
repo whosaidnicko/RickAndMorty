@@ -9,25 +9,18 @@ import UIKit
 import SDWebImage
 import SnapKit
 
-
-
-final class ViewController: UIViewController{
-
-  
+final class CharacterList: UIViewController{
     var path =  IndexPath()
     var idForEpisode = "1"
     var urls: [Any] = []
-    
     private lazy var headerTitle: UILabel = {
         let headerTitle = UILabel()
         headerTitle.text = "Rick and Morty"
         headerTitle.textColor = .black
         headerTitle.font = UIFont(name: "HelveticaNeue-CondensedBlack", size: 35)
-        headerTitle.layer.frame = CGRect(x: 25, y: 95, width: 450, height: 37)
+        headerTitle.layer.frame = CGRect(x: 25, y: 70, width: 450, height: 37)
         return headerTitle
     }()
-    
-    
     @IBOutlet weak var tableView: UITableView!
     private var episodeModel: [EpisodeModel] = []
     private var heroesModel: [HeroesModel] = []
@@ -35,7 +28,6 @@ final class ViewController: UIViewController{
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         view.addSubview(headerTitle)
         setupTableView()
         getCharacter()
@@ -44,22 +36,20 @@ final class ViewController: UIViewController{
         tableView.backgroundColor = .white
         tableView.dataSource = self
         tableView.delegate = self
-        tableView.register(UINib(nibName: "TableViewCell", bundle: nil), forCellReuseIdentifier: "CellHero")
+        tableView.register(UINib(nibName: "CharacterCell", bundle: nil), forCellReuseIdentifier: "CharacterCell")
         tableView.reloadData()
         //Hiding navBar
         navigationController?.navigationBar.isHidden = true
-        
     }
+    
     private func setupTableView() {
-        // TableView
-       
+        // TableView constraints
         tableView.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview()
-            make.top.equalTo(headerTitle.snp.bottom).offset(5)
+            make.top.equalTo(headerTitle.snp.bottom).offset(20)
             make.bottom.equalToSuperview().offset(-10)
         }
     }
-
     
     func getCharacter() {
         // Random page of characters
@@ -106,15 +96,14 @@ final class ViewController: UIViewController{
     }
 }
 //MARK: - UITableView data source
-
-extension ViewController: UITableViewDataSource {
+extension CharacterList: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // returning count of objects received.
         return heroesModel.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "CellHero", for: indexPath) as! TableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "CharacterCell", for: indexPath) as! CharacterCell
         // Set cell UI.
         cell.backgroundColor = .red
         cell.backMainView.layer.masksToBounds = false
@@ -130,15 +119,13 @@ extension ViewController: UITableViewDataSource {
     }
 }
 //MARK: - UITableViewDelegate
-extension ViewController: UITableViewDelegate {
+extension CharacterList: UITableViewDelegate {
     //Header height.
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        
         return  0
     }
     //View for header Section.
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        
         let abstractView = UIView()
         return abstractView
     }
@@ -149,16 +136,14 @@ extension ViewController: UITableViewDelegate {
         // Fetching data of episode with id what we received from cell.
         getEpisode(isRunSegue: true)
         // Going to SecondViewController.
-       
     }
-    
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Receiving what cell user tapped.
         let path = tableView.indexPathForSelectedRow
         let index = path?.row
         // Set destination as SecondViewController.
-        let secondVc = segue.destination as! SecondViewController
+        let detailedCharacterVC = segue.destination as! DetailedCharacterList
         // Set UI for SecondViewController show to user information about character what he choosed.
         guard let index = index else { return }
         let heroesModel = self.heroesModel[index]
@@ -183,9 +168,8 @@ extension ViewController: UITableViewDelegate {
             statusLabel: heroesModel.status,
             statusImageBorderColor: statusImageBorderColor,
             imageCharacterURL: URL(string: (heroesModel.img)))
-        
-        
-        secondVc.setupData(model: model)
+        // saving to detailedCharacterVc
+        detailedCharacterVC.setupData(model: model)
         //MARK: - Decoding each character from list of episode
         //Going through loop array of json urls
         for characterURL in episodeModel[0].characters{
@@ -198,11 +182,10 @@ extension ViewController: UITableViewDelegate {
                     do {
                         let jsonCharacterEpisode = try JSONDecoder().decode(DataCharactersLocation.self, from: data)
                         // Appending each character , to reuse it.
-                        secondVc.character.append(jsonCharacterEpisode)
+                        detailedCharacterVC.character.append(jsonCharacterEpisode)
                         // After we appended all characters, we reload tableView of SecondViewController
-                        
                         DispatchQueue.main.async {
-                            secondVc.tableView?.reloadData()
+                            detailedCharacterVC.tableView?.reloadData()
                         }
                     }
                     catch {
@@ -212,7 +195,6 @@ extension ViewController: UITableViewDelegate {
             }.resume()
         }
     }
-    
 }
 
 
