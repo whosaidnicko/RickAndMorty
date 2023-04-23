@@ -11,6 +11,7 @@ import SnapKit
 //MARK: -  SETTING UI
 
 class CharacterCell: UITableViewCell{
+    var heroesModel: [HeroesModel] = []
     lazy var nameHero = UILabel()
     lazy var  pictureHero = UIImageView()
     lazy var entireView = UIView()
@@ -20,6 +21,7 @@ class CharacterCell: UITableViewCell{
     lazy var labelLocation = UILabel()
     lazy var staticLabelEpisode = UILabel()
     lazy var dinamicLabelEpisode = UILabel()
+    var characterModel: CharactersInfoModel = .template
     
     override func prepareForReuse() {
         super.prepareForReuse()
@@ -28,6 +30,7 @@ class CharacterCell: UITableViewCell{
     override func awakeFromNib() {
         super.awakeFromNib()
         setAllUI()
+ 
         
     }
     
@@ -37,6 +40,12 @@ class CharacterCell: UITableViewCell{
     
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
+    }
+    
+    func setupData(model: CharactersInfoModel) {
+        // Saving character object
+        self.characterModel = model
+        setAllUI()
     }
     
     func setAllUI() {
@@ -54,7 +63,7 @@ class CharacterCell: UITableViewCell{
         shadow.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(13)
             make.leading.equalToSuperview().offset(32)
-            make.height.equalTo(84)
+            make.height.equalTo(90)
             make.width.equalTo(322)
         }
         shadow.layer.masksToBounds = false
@@ -70,7 +79,7 @@ class CharacterCell: UITableViewCell{
         backMainView.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(10)
             make.leading.equalToSuperview().offset(25)
-            make.height.equalTo(94)
+            make.height.equalTo(100)
             make.width.equalTo(333)
         }
         backMainView.layer.cornerRadius = 10
@@ -93,21 +102,15 @@ class CharacterCell: UITableViewCell{
     
     func setNameHero() {
         addSubview(nameHero)
-        let width = UIScreen.main.bounds.width - 50
-        let height = ceil(nameHero.text?.height(
-            withConstrainedWidth: width,
-            font: UIFont(name: "HelveticaNeue-CondensedBlack", size: 24) ?? .systemFont(ofSize: 24)) ?? 24)
-        nameHero.snp.makeConstraints { make in
-            make.top.equalTo(backMainView.snp.top).offset(7)
-            make.leading.equalTo(backMainView.snp.leading).offset(100)
-            make.trailing.equalTo(-25)
-            make.height.equalTo(height)
-        }
         nameHero.textColor = #colorLiteral(red: 1, green: 0.6838926673, blue: 0, alpha: 1)
-        nameHero.font = UIFont(name: "HelveticaNeue-CondensedBlack", size: 22)
+        nameHero.font = UIFont(name: "HelveticaNeue-CondensedBlack", size: 18)
         nameHero.numberOfLines = 0
         nameHero.lineBreakMode = .byWordWrapping
-        nameHero.preferredMaxLayoutWidth = 320
+        nameHero.snp.makeConstraints { make in
+            make.top.equalTo(backMainView.snp.top).offset(2)
+            make.leading.equalTo(backMainView.snp.leading).offset(100)
+            make.trailing.equalToSuperview().offset(-50)
+        }
     }
     
     func setLabelLocation(){

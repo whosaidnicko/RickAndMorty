@@ -56,7 +56,7 @@ final class CharacterList: UIViewController{
         let maxNumber = 40
         let randomNumber = String(Int.random(in: 0...maxNumber))
         // Fetching character
-        networkManager.getCharacter(url: URLs.urlHeroes + "\(randomNumber)", completion: {[weak self] result in
+        networkManager.getCharacter(url: URLs.urlHeroes + "8", completion: {[weak self] result in
             switch result {
                 // Error.
             case .failure(let error):
@@ -105,6 +105,7 @@ extension CharacterList: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "CharacterCell", for: indexPath) as! CharacterCell
         // Set cell UI.
+        cell.heroesModel = heroesModel
         cell.backgroundColor = .red
         cell.backMainView.layer.masksToBounds = false
         cell.nameHero.text =  heroesModel[indexPath.row].name

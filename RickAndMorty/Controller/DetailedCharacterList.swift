@@ -116,6 +116,7 @@ final class DetailedCharacterList: UIViewController {
             make.height.equalTo(height)
         }
     }
+    
     func setImageCharacter() {
         view.addSubview(imageCharacter)
         imageCharacter.snp.makeConstraints { make in
