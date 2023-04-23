@@ -120,15 +120,16 @@ class CharacterCell: UITableViewCell{
         labelLocation.numberOfLines = 0
         labelLocation.lineBreakMode = .byWordWrapping
         labelLocation.preferredMaxLayoutWidth = 310
-        let width = UIScreen.main.bounds.width - 190
+        let width = UIScreen.main.bounds.width - 230
         let height = ceil(labelLocation.text?.height(
             withConstrainedWidth: width,
             font:.boldSystemFont(ofSize: 12)) ?? 12)
         labelLocation.snp.makeConstraints { make in
-            make.top.equalTo(nameHero.snp.bottom).offset(7)
+            make.top.equalTo(nameHero.snp.bottom).offset(-2)
             make.leading.equalTo(nameHero.snp.leading)
-            make.trailing.equalTo(-25)
-            make.height.equalTo(height)
+            make.trailing.equalTo(-60)
+            make.height.equalTo(24)
+        
         }
     }
     
