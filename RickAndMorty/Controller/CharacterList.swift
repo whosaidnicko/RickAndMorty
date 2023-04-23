@@ -105,7 +105,6 @@ extension CharacterList: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "CharacterCell", for: indexPath) as! CharacterCell
         // Set cell UI.
-        cell.heroesModel = heroesModel
         cell.backgroundColor = .red
         cell.backMainView.layer.masksToBounds = false
         cell.nameHero.text =  heroesModel[indexPath.row].name

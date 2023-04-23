@@ -14,7 +14,6 @@ class CharacterCell: UITableViewCell{
     lazy var nameHero = UILabel()
     lazy var  pictureHero = UIImageView()
     lazy var entireView = UIView()
-    lazy  var yo  = UILabel()
     lazy var shadow = UIView()
     lazy var backMainView = UIView()
     lazy var labelLocation = UILabel()
@@ -88,7 +87,7 @@ class CharacterCell: UITableViewCell{
         pictureHero.snp.makeConstraints { make in
             make.top.equalTo(backMainView.snp.top)
             make.leading.equalTo(backMainView.snp.leading)
-            make.height.equalTo(94)
+            make.height.equalTo(100)
             make.width.equalTo(94)
         }
     }
