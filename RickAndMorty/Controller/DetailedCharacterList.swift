@@ -10,10 +10,9 @@ import SnapKit
 import SDWebImage
 
 final class DetailedCharacterList: UIViewController {
-    var nameFirstSeen = [String]()
-    var characterModel: CharactersInfoModel = .template
-    var urlsForFirstSeen = [String]()
-    let screenSize = UIScreen.main.bounds.size
+    private var nameFirstSeen = [String]()
+    public var characterModel: CharactersInfoModel = .template
+    public var urlsForFirstSeen = [String]()
     public var character = [DataCharactersEpisode]()
     //Adding UI
     public let backButton = UIButton(type: .system)
@@ -344,7 +343,7 @@ extension DetailedCharacterList: UITableViewDelegate {
         }
         
         dispatchGroup.notify(queue: DispatchQueue.main) {
-       
+            
             let characterModel = self.character[indexPath.row]
             let statusImageBorderColor: UIColor
             // Logic of statusImage
@@ -378,7 +377,6 @@ extension DetailedCharacterList: UITableViewDelegate {
             // Push new ViewController
             self.navigationController?.pushViewController(myNewViewController ?? .init(nibName: nil, bundle: nil), animated: true)
         }
-            
     }
 }
 
