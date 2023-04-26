@@ -53,10 +53,10 @@ final class CharacterList: UIViewController{
     
     func getCharacter() {
         // Random page of characters
-        let maxNumber = 40
+        let maxNumber = 50
         let randomNumber = String(Int.random(in: 0...maxNumber))
         // Fetching character
-        networkManager.getCharacter(url: URLs.urlHeroes + "8", completion: {[weak self] result in
+        networkManager.getCharacter(url: URLs.urlHeroes + "7", completion: {[weak self] result in
             switch result {
                 // Error.
             case .failure(let error):

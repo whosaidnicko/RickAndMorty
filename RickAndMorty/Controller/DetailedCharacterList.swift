@@ -38,7 +38,6 @@ final class DetailedCharacterList: UIViewController {
         tableView.rowHeight = 120
         view.backgroundColor = .white
         navigationController?.navigationBar.isHidden = true
-        
     }
     // Actions after backButton pressed.
     @objc func backButtonPressed() {
