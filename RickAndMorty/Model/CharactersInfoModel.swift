@@ -19,7 +19,7 @@ struct CharactersInfoModel {
         imageCharacterURL: nil)
     let topTitle: String
     let location: String
-    let firstSeenDinamic: String
+    var firstSeenDinamic: String
     let episodeModel: String
     let alsoLabel: String
     let statusLabel: String

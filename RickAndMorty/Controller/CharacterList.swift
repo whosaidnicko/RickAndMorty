@@ -183,6 +183,7 @@ extension CharacterList: UITableViewDelegate {
                         let jsonCharacterEpisode = try JSONDecoder().decode(DataCharactersEpisode.self, from: data)
                         // Appending each character , to reuse it.
                         detailedCharacterVC.character.append(jsonCharacterEpisode)
+                        detailedCharacterVC.urlsForFirstSeen.append(jsonCharacterEpisode.episode[0])
                         // After we appended all characters, we reload tableView of SecondViewController
                         DispatchQueue.main.async {
                             detailedCharacterVC.tableView?.reloadData()

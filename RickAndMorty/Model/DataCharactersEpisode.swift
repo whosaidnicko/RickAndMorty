@@ -12,5 +12,6 @@ struct DataCharactersEpisode:Decodable {
     public let image: String
     public let location: Locations
     public let status: String
+    public let episode: [String]
 }
 

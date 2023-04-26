@@ -10,7 +10,9 @@ import SnapKit
 import SDWebImage
 
 final class DetailedCharacterList: UIViewController {
+    var nameFirstSeen = [String]()
     var characterModel: CharactersInfoModel = .template
+    var urlsForFirstSeen = [String]()
     let screenSize = UIScreen.main.bounds.size
     public var character = [DataCharactersEpisode]()
     //Adding UI
@@ -315,37 +317,68 @@ extension DetailedCharacterList: UITableViewDataSource {
 extension DetailedCharacterList: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         // Action after user tapped cell
-        let characterModel = self.character[indexPath.row]
-        let statusImageBorderColor: UIColor
-        // Logic of statusImage
-        if characterModel.status == "Dead" {
-            statusImageBorderColor = UIColor.red
+        // Creating dispatch to acces  names where they been seen first time.
+        let dispatchGroup = DispatchGroup()
+        // going through loop to show first episode name
+        for firstSeenUrl in urlsForFirstSeen {
+            guard let url = URL(string: firstSeenUrl) else  { continue }
+            // enter dispatch
+            dispatchGroup.enter()
+            URLSession.shared.dataTask(with: url) { (data, response, error) in
+                if let error = error {
+                    print( "\(error.localizedDescription)")
+                }
+                if let data = data {
+                    do {
+                        let jsonNameEpisode = try JSONDecoder().decode(EpisodeModel.self, from: data)
+                        let nameFirstSeen = jsonNameEpisode.name
+                        // appending name of episode in variable
+                        self.nameFirstSeen.append(nameFirstSeen)
+                    }
+                    catch {
+                        print("\(error.localizedDescription)")
+                    }
+                }
+                dispatchGroup.leave()
+            }.resume()
         }
-        else if characterModel.status == "Alive" {
-            statusImageBorderColor = UIColor.systemGreen
+        
+        dispatchGroup.notify(queue: DispatchQueue.main) {
+       
+            let characterModel = self.character[indexPath.row]
+            let statusImageBorderColor: UIColor
+            // Logic of statusImage
+            if characterModel.status == "Dead" { // Dead
+                statusImageBorderColor = UIColor.red
+            }
+            else if characterModel.status == "Alive" { // Alive
+                statusImageBorderColor = UIColor.systemGreen
+            }
+            else { // unknown
+                statusImageBorderColor = UIColor.purple
+            }
+            //  init model  for new ViewController
+            let model: CharactersInfoModel = .init(
+                topTitle: characterModel.name,
+                location: characterModel.location.name,
+                firstSeenDinamic: self.nameFirstSeen[indexPath.row],
+                episodeModel: self.characterModel.episodeModel,
+                alsoLabel: self.characterModel.alsoLabel,
+                statusLabel: characterModel.status,
+                statusImageBorderColor: statusImageBorderColor,
+                imageCharacterURL: URL(string: characterModel.image))
+            // Get needed story board.
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            // Created new ViewController
+            let myNewViewController = storyboard.instantiateViewController(identifier: "SecondViewController") as? DetailedCharacterList
+            // We saved data in new ViewController
+            myNewViewController?.nameFirstSeen = self.nameFirstSeen
+            myNewViewController?.setupData(model: model)
+            myNewViewController?.character = self.character
+            // Push new ViewController
+            self.navigationController?.pushViewController(myNewViewController ?? .init(nibName: nil, bundle: nil), animated: true)
         }
-        else {
-            statusImageBorderColor = UIColor.purple
-        }
-        //  init model  for new ViewController
-        let model: CharactersInfoModel = .init(
-            topTitle: characterModel.name,
-            location: characterModel.location.name,
-            firstSeenDinamic: self.characterModel.firstSeenDinamic,
-            episodeModel: self.characterModel.episodeModel,
-            alsoLabel: self.characterModel.alsoLabel,
-            statusLabel: characterModel.status,
-            statusImageBorderColor: statusImageBorderColor,
-            imageCharacterURL: URL(string: characterModel.image))
-        // Get needed story board.
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        // Created new ViewController
-        let myNewViewController = storyboard.instantiateViewController(identifier: "SecondViewController") as? DetailedCharacterList
-        // We saved data in new ViewController
-        myNewViewController?.setupData(model: model)
-        myNewViewController?.character = character
-        // Push new ViewController
-        self.navigationController?.pushViewController(myNewViewController ?? .init(nibName: nil, bundle: nil), animated: true)
+            
     }
 }
 
