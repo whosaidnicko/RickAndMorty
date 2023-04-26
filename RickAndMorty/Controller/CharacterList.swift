@@ -180,7 +180,7 @@ extension CharacterList: UITableViewDelegate {
                 }
                 if let data = data {
                     do {
-                        let jsonCharacterEpisode = try JSONDecoder().decode(DataCharactersLocation.self, from: data)
+                        let jsonCharacterEpisode = try JSONDecoder().decode(DataCharactersEpisode.self, from: data)
                         // Appending each character , to reuse it.
                         detailedCharacterVC.character.append(jsonCharacterEpisode)
                         // After we appended all characters, we reload tableView of SecondViewController

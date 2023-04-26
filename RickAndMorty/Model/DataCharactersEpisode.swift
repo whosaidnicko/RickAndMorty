@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct DataCharactersLocation:Decodable {
+struct DataCharactersEpisode:Decodable {
     public let name: String
     public let image: String
     public let location: Locations

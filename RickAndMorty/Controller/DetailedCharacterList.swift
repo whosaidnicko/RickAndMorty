@@ -12,7 +12,7 @@ import SDWebImage
 final class DetailedCharacterList: UIViewController {
     var characterModel: CharactersInfoModel = .template
     let screenSize = UIScreen.main.bounds.size
-    public var character = [DataCharactersLocation]()
+    public var character = [DataCharactersEpisode]()
     //Adding UI
     public let backButton = UIButton(type: .system)
     public let episodeModel = UILabel()
